@@ -1,0 +1,984 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "name": "learnkit-ruleset",
+    "version": "1.0.0",
+    "derivedFrom": "docs/SOURCE_OF_TRUTH.md",
+    "generated": "2026-07-14",
+    "description": "LearnKit — machine-readable rule set for designing/generating neuroinclusive coursework and instructional content for any subject. Each rule carries a scope (content|platform|pipeline), an evidence tier, an automatable flag, and a before/after/why example. src/audit-content.ts implements every rule where automatable=true and scope=content; src/audit-platform.ts covers the automatable platform rules.",
+    "tierLegend": {
+      "strong": "RCT, meta-analysis, or normative standards body",
+      "moderate": "single study, mixed literature, or non-normative standards note",
+      "contested": "genuine disagreement in the literature; adopt only with rationale + test plan",
+      "inference": "reasoned extension of sources, not directly stated"
+    },
+    "scopeLegend": {
+      "content": "checkable against generated instructional content (lessons, objectives, questions, rubrics)",
+      "platform": "governs the delivery UI/design system; audited in the rendering layer, not content JSON",
+      "pipeline": "governs the generation process itself (gates, labeling); enforced procedurally"
+    },
+    "checkTypeLegend": {
+      "auto": "deterministic validator (structural/regex/distribution)",
+      "llm": "requires a model judgment (multi-model or human-backed per TEC-8)",
+      "human": "requires human review"
+    }
+  },
+  "prohibited": [
+    {
+      "id": "PROHIBIT-learning-styles",
+      "pattern": "Match instruction to a self-reported learning style (visual/auditory/kinesthetic).",
+      "contradicts": "MM-2",
+      "sourceUrl": "https://www.learningscientists.org/blog/2016/9/1-1"
+    },
+    {
+      "id": "PROHIBIT-dyslexia-fonts",
+      "pattern": "Prescribe OpenDyslexic/Dyslexie as a reading treatment.",
+      "contradicts": "NEU-1",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5629233/"
+    },
+    {
+      "id": "PROHIBIT-contrast-only",
+      "pattern": "Ship a single hard-coded high-contrast-only color scheme.",
+      "contradicts": "NEU-5",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6485264/"
+    },
+    {
+      "id": "PROHIBIT-faster-feedback",
+      "pattern": "Optimize feedback for delivery speed as a primary driver.",
+      "contradicts": "FBK-2",
+      "sourceUrl": "https://link.springer.com/article/10.1007/s10648-026-10117-8"
+    },
+    {
+      "id": "PROHIBIT-dopamine-claims",
+      "pattern": "Justify engagement mechanics with vague 'dopamine' claims.",
+      "contradicts": "MOT-5",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Self-determination_theory"
+    },
+    {
+      "id": "PROHIBIT-color-only-status",
+      "pattern": "Encode status by color or emoji alone.",
+      "contradicts": "NEU-8",
+      "sourceUrl": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+    },
+    {
+      "id": "PROHIBIT-single-llm-judge",
+      "pattern": "Use a single LLM-as-judge as the sole quality gate.",
+      "contradicts": "TEC-8",
+      "sourceUrl": "https://arxiv.org/abs/2508.05929"
+    }
+  ],
+  "rules": [
+    {
+      "id": "OBJ-1",
+      "category": "objectives",
+      "title": "Two-dimensional Bloom's cell on every objective",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Reject any objective/learning-outcome missing a cognitive process AND a knowledge type.",
+      "sourceUrl": "https://tophat.com/blog/blooms-taxonomy/",
+      "examples": {
+        "before": "\"1.1\"  (a bare objective id, no text or Bloom cell)",
+        "after": "{ \"id\": \"1.1\", \"text\": \"Explain how a model learns parameters from data\", \"bloom\": { \"process\": \"Understand\", \"knowledge\": \"Conceptual\" } }",
+        "why": "Bare ids can't be checked for rigor, alignment, or Bloom balance."
+      }
+    },
+    {
+      "id": "OBJ-2",
+      "category": "objectives",
+      "title": "Single measurable action verb per objective",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Flag learning-outcome bullets with >1 assessable verb (e.g. 'define and apply') or a non-measurable verb (understand/know/learn/appreciate/be aware).",
+      "sourceUrl": "https://tips.uark.edu/using-blooms-taxonomy/",
+      "examples": {
+        "before": "\"Students will understand and apply Newton's second law.\"",
+        "after": "\"…define Newton's second law\" (Remember×Conceptual) + \"…apply it to solve force problems\" (Apply×Procedural)",
+        "why": "\"understand\" isn't measurable and two verbs make pass/fail ambiguous."
+      }
+    },
+    {
+      "id": "OBJ-3",
+      "category": "objectives",
+      "title": "Bloom's ordering is not a prerequisite chain",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Non-sequential skill ordering allowed with a written sequencing_rationale.",
+      "sourceUrl": "https://itali.uq.edu.au/teaching-guidance/principles-learning/guiding-theories-and-frameworks/structuring-learning",
+      "examples": {
+        "before": "Analyze-level objective placed before any Remember objective, no explanation.",
+        "after": "Same ordering, plus sequencing_rationale: \"a discovery task motivates the formula students then memorize.\"",
+        "why": "Non-sequential ordering is fine when the rationale is documented."
+      }
+    },
+    {
+      "id": "OBJ-4",
+      "category": "objectives",
+      "title": "Learning-goal (mastery) framing, not performance-goal",
+      "tier": "contested",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Flag objectives containing score/percentage targets.",
+      "sourceUrl": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2024.1511605/full",
+      "examples": {
+        "before": "\"Score at least 80% on the module quiz.\"",
+        "after": "\"Explain the trade-offs between INT8 and FP16 quantization.\"",
+        "why": "Mastery framing lowers anxiety and tunnel-vision vs a score target."
+      }
+    },
+    {
+      "id": "OBJ-5",
+      "category": "objectives",
+      "title": "Mastery goals for novice/complex modules",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "First module of a track sets no numeric first-attempt accuracy target.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Goal-setting_theory",
+      "examples": {
+        "before": "Module 1 goal: \"Achieve 90% first-attempt accuracy.\"",
+        "after": "Module 1 goal: \"Understand the core vocabulary of the AI software stack.\"",
+        "why": "Specific performance targets overload novices; reserve them for consolidation."
+      }
+    },
+    {
+      "id": "OBJ-6",
+      "category": "objectives",
+      "title": "Self-system + metacognitive objectives where motivation is a barrier",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Self-paced flag => >=1 self-system and >=1 metacognitive objective present.",
+      "sourceUrl": "https://itali.uq.edu.au/teaching-guidance/principles-learning/guiding-theories-and-frameworks/structuring-learning",
+      "examples": {
+        "before": "Self-paced course with only cognitive objectives.",
+        "after": "Add \"Identify why this skill matters to your role\" (self-system) + \"Monitor your comprehension with the end-of-lesson checklist\" (metacognitive).",
+        "why": "Self-paced learners need motivation and self-regulation supports."
+      }
+    },
+    {
+      "id": "OBJ-7",
+      "category": "objectives",
+      "title": "Backward-design alignment (objective coverage)",
+      "tier": "inference",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Every objective has >=1 aligned lesson AND >=1 aligned assessment item; every assessment item references a real objective.",
+      "sourceUrl": "https://poorvucenter.yale.edu/BackwardDesign",
+      "examples": {
+        "before": "A quiz item tagged to objective 3.4 that no lesson teaches.",
+        "after": "Every item references an objective that has ≥1 lesson and appears in a summative.",
+        "why": "Backward-design alignment: objectives ↔ activities ↔ assessment."
+      }
+    },
+    {
+      "id": "STR-1",
+      "category": "structure",
+      "title": "Segmenting with learner-controlled units",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Flag lessons whose estimatedMinutes exceed the segmenting threshold as candidates to split.",
+      "sourceUrl": "https://eric.ed.gov/?q=mayer+multimedia+learning+2024",
+      "examples": {
+        "before": "One continuous 90-minute lesson.",
+        "after": "Three ~25–30m segments with a learner-controlled continue-gate between each.",
+        "why": "Segmenting keeps working-memory load manageable."
+      }
+    },
+    {
+      "id": "STR-2",
+      "category": "structure",
+      "title": "Pre-training vocabulary before term-dense lessons",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Lessons past the term-density threshold must contain a vocabulary/prerequisite/key-terms section.",
+      "sourceUrl": "https://eric.ed.gov/?q=mayer+multimedia+learning+2024",
+      "examples": {
+        "before": "Lesson opens with \"tensor parallelism, sharding, and KV cache\" and no primer.",
+        "after": "Prepend a Key Terms table defining each before the explanation.",
+        "why": "Pre-training the vocabulary frees capacity for the core idea."
+      }
+    },
+    {
+      "id": "STR-3",
+      "category": "structure",
+      "title": "Manage intrinsic vs extraneous load",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "llm",
+      "check": "Presentation-caused load (split attention, redundant text) flagged independently of topic difficulty.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Cognitive_load",
+      "examples": {
+        "before": "Diagram with its legend in a separate column so the eye must jump back and forth.",
+        "after": "Labels integrated directly onto the diagram.",
+        "why": "Split-attention is extraneous load the designer controls."
+      }
+    },
+    {
+      "id": "STR-4",
+      "category": "structure",
+      "title": "Worked-example-first for procedures, then fade",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "llm",
+      "check": "Procedural modules present >=1 worked example before the first unsupported problem.",
+      "sourceUrl": "https://link.springer.com/article/10.1007/s10648-023-09745-1",
+      "examples": {
+        "before": "\"Here's the concept — now solve these 10 problems.\"",
+        "after": "One fully worked example → a completion problem → then independent practice; fade support as skill grows.",
+        "why": "Worked-example effect (g≈0.48); withdraw scaffolds as learners gain expertise."
+      }
+    },
+    {
+      "id": "STR-5",
+      "category": "structure",
+      "title": "Persistent progress + resume",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Progress indicator + resume-where-I-left-off present.",
+      "sourceUrl": "https://www.nationalacademies.org/read/24783/chapter/7",
+      "examples": {
+        "before": "No progress indicator; a refresh loses the learner's place.",
+        "after": "Persistent progress bar + \"resume where I left off.\"",
+        "why": "Working across segments shouldn't rely on memory."
+      }
+    },
+    {
+      "id": "MM-1",
+      "category": "multimedia",
+      "title": "Dual coding: visual per abstract concept",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Concept-heavy lessons should contain >=1 relevant visual asset (image/diagram/table).",
+      "sourceUrl": "https://www.learningscientists.org/blog/2016/9/1-1",
+      "examples": {
+        "before": "Three paragraphs describing a data pipeline, no visual.",
+        "after": "Add a labeled pipeline diagram alongside the text.",
+        "why": "Dual coding: pairing words with a relevant visual aids learning."
+      }
+    },
+    {
+      "id": "MM-2",
+      "category": "multimedia",
+      "title": "No learning-styles matching",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Reject content that keys presentation on a self-reported learning style.",
+      "sourceUrl": "https://www.learningscientists.org/blog/2016/9/1-1",
+      "examples": {
+        "before": "\"Pick your learning style to get a video or a text version.\"",
+        "after": "Everyone receives the diagram + text + narration.",
+        "why": "Matching to a self-reported style does not improve outcomes (Pashler 2008)."
+      }
+    },
+    {
+      "id": "MM-3",
+      "category": "multimedia",
+      "title": "Coherence + signaling",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Instructional pages use heading/signal structure; flag decorative-only media.",
+      "sourceUrl": "https://eric.ed.gov/?q=mayer+multimedia+learning+2024",
+      "examples": {
+        "before": "A decorative robot-with-sparkles hero image on the lesson page.",
+        "after": "Remove the decoration; add section headings and arrows that signal the real diagram's structure.",
+        "why": "Coherence (cut extraneous) + signaling (cue structure)."
+      }
+    },
+    {
+      "id": "MM-4",
+      "category": "multimedia",
+      "title": "Temporal + spatial contiguity",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Captions/labels co-timed and co-located with their graphic.",
+      "sourceUrl": "https://eric.ed.gov/?q=mayer+multimedia+learning+2024",
+      "examples": {
+        "before": "A figure on one screen, its caption revealed on the next.",
+        "after": "Caption sits beside the figure; in video, narration is co-timed with the graphic.",
+        "why": "Spatial + temporal contiguity reduce integration load."
+      }
+    },
+    {
+      "id": "MM-5",
+      "category": "multimedia",
+      "title": "Modality + redundancy",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "No simultaneous identical narration + full on-screen text over a graphic.",
+      "sourceUrl": "https://eric.ed.gov/?q=mayer+multimedia+learning+2024",
+      "examples": {
+        "before": "Narration reads the on-screen bullet text word-for-word over a graphic.",
+        "after": "Graphic + narration; on-screen text trimmed to keywords only.",
+        "why": "Redundant identical text + narration splits the visual channel."
+      }
+    },
+    {
+      "id": "SPC-1",
+      "category": "practice",
+      "title": "Spacing: revisit each concept after >=1 day",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Each objective/concept has >=2 practice touchpoints across different lessons (proxy for distributed sessions).",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12189222/",
+      "examples": {
+        "before": "All cuDF practice lives only in Lesson 3.",
+        "after": "cuDF is revisited with practice in Lessons 5 and 8, ≥1 day apart.",
+        "why": "Distributed practice beats massing for durable retention."
+      }
+    },
+    {
+      "id": "SPC-2",
+      "category": "practice",
+      "title": "Retrieval follows instruction",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "No assessment item references an objective/concept that no lesson teaches.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292765/",
+      "examples": {
+        "before": "A quiz asks about TensorRT before any lesson introduces it.",
+        "after": "Gate the item behind the lesson that teaches TensorRT.",
+        "why": "Retrieval should follow instruction, not test untaught material."
+      }
+    },
+    {
+      "id": "SPC-3",
+      "category": "practice",
+      "title": "Interleaving mixed problem types",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "llm",
+      "check": "Practice sets past intro phase are not single-type blocks.",
+      "sourceUrl": "https://www.aft.org/ae/fall2013/dunlosky",
+      "examples": {
+        "before": "Twenty identical derivative problems in a row.",
+        "after": "Interleave derivative, integral, and limit problems.",
+        "why": "Interleaving improves discrimination and transfer."
+      }
+    },
+    {
+      "id": "SPC-4",
+      "category": "practice",
+      "title": "Transfer-appropriate retrieval",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "llm",
+      "check": "If the summative requires applied reasoning, practice includes applied (not recall-only) items.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292765/",
+      "examples": {
+        "before": "Definition flashcards preparing for an applied certification exam.",
+        "after": "Add scenario items (\"what should the team do first?\") that mirror the exam.",
+        "why": "Transfer-appropriate: match practice format to the criterion test."
+      }
+    },
+    {
+      "id": "SPC-5",
+      "category": "practice",
+      "title": ">=2 successful retrievals before retiring a card",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Spaced-repetition card-retire threshold >=2.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292765/",
+      "examples": {
+        "before": "A card is retired after one correct answer.",
+        "after": "Retire only after ≥2 spaced successful retrievals.",
+        "why": "One success doesn't establish durable memory."
+      }
+    },
+    {
+      "id": "SPC-6",
+      "category": "practice",
+      "title": "Explicit instruction before retrieval for low prior knowledge",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Prerequisite-gap flag => instruction precedes first retrieval.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12292765/",
+      "examples": {
+        "before": "A novice is dropped into a cold retrieval quiz.",
+        "after": "Teach the concept explicitly, then retrieve.",
+        "why": "Low-prior-knowledge learners need instruction before retrieval."
+      }
+    },
+    {
+      "id": "SPC-7",
+      "category": "practice",
+      "title": "Surface desirable difficulty to learners",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Spaced/retrieval activities carry an explanatory rationale to the learner.",
+      "sourceUrl": "https://link.springer.com/article/10.1007/s10648-023-09766-w",
+      "examples": {
+        "before": "A spaced quiz with no note; the learner feels it \"isn't working\" and reverts to re-reading.",
+        "after": "Add: \"This feels harder because spacing strengthens long-term memory — that difficulty is the point.\"",
+        "why": "Learners misread effort as poor learning (r≈−0.36)."
+      }
+    },
+    {
+      "id": "ASM-1",
+      "category": "assessment",
+      "title": "Formative check before summative in each module",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Each module has >=1 FORMATIVE item positioned before any SUMMATIVE item; assessments carry a formative/summative label.",
+      "sourceUrl": "https://www.cmu.edu/teaching/assessment/basics/formative-summative.html",
+      "examples": {
+        "before": "Module ends with only a graded final exam.",
+        "after": "Add a low-stakes concept-check mid-module before the final.",
+        "why": "Formative practice before summative improves outcomes."
+      }
+    },
+    {
+      "id": "ASM-2",
+      "category": "assessment",
+      "title": "Formative feedback: actionable, revisable, metacognitive",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "llm",
+      "check": "Formative items expose criterion links + a revision opportunity + a reflection prompt.",
+      "sourceUrl": "https://poorvucenter.yale.edu/Formative-Summative-Assessments",
+      "examples": {
+        "before": "Feedback = \"Score: 6/10.\"",
+        "after": "\"Criterion 'evidence' unmet — cite a source for each claim. Revise before Friday's final. Rate your confidence 1–5.\"",
+        "why": "Actionable + revisable + metacognitive beats a bare score."
+      }
+    },
+    {
+      "id": "ASM-3",
+      "category": "assessment",
+      "title": "Summative prioritizes application over recall",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Summative item set is not majority Remember/RECALL level; every item carries a cognitiveLevel.",
+      "sourceUrl": "https://arxiv.org/abs/2504.14232",
+      "examples": {
+        "before": "Summative is 80% recall-of-definitions and items carry no cognitiveLevel.",
+        "after": "Majority Apply/Analyze scenario items, each tagged with a cognitiveLevel.",
+        "why": "Summatives should favor application; tagging lets you verify the mix."
+      }
+    },
+    {
+      "id": "FBK-1",
+      "category": "feedback",
+      "title": "Informational, not controlling, feedback",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Assessment items carry corrective/explanatory rationale per choice, not a bare score.",
+      "sourceUrl": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03087/full",
+      "examples": {
+        "before": "explanation: \"The correct answer is A.\"",
+        "after": "Per-choice: A \"Correct: chlorophyll absorbs light energy to drive the reaction.\" B \"Wrong: stomata exchange gases; they don't capture light.\" C \"Wrong: mitochondria run respiration, not photosynthesis.\"",
+        "why": "Explaining why each distractor is wrong teaches; a bare verdict doesn't."
+      }
+    },
+    {
+      "id": "FBK-2",
+      "category": "feedback",
+      "title": "Invest in feedback information quality, not speed",
+      "tier": "strong",
+      "scope": "pipeline",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Feedback objects carry specificity/elaboration fields; no rule enforces sub-second delivery.",
+      "sourceUrl": "https://link.springer.com/article/10.1007/s10648-026-10117-8",
+      "examples": {
+        "before": "Requirement: \"Feedback must appear in under 1 second.\"",
+        "after": "Invest in elaborated corrective content; let timing match level/domain (delayed is fine when it aids consolidation).",
+        "why": "Feedback timing is not a reliable main effect; quality is."
+      }
+    },
+    {
+      "id": "RUB-1",
+      "category": "assessment",
+      "title": "Rubric descriptor mechanics",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Descriptors: no generic adjectives; impact not counts; parallel across levels; one page. (N/A if no rubrics present.)",
+      "sourceUrl": "https://teaching-resources.delta.ncsu.edu/rubric_best-practices-examples-templates/",
+      "examples": {
+        "before": "Criterion \"Sources\": good / excellent / poor.",
+        "after": "\"Uses credible, peer-reviewed sources; citation errors do not distract from readability.\" (parallel wording across levels, one page)",
+        "why": "Observable, impact-based, parallel descriptors are gradeable."
+      }
+    },
+    {
+      "id": "RUB-2",
+      "category": "assessment",
+      "title": "Rubric type matches task",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": false,
+      "checkType": "human",
+      "check": "analytic (multi-skill) / holistic (quick/subjective) / single-point (formative).",
+      "sourceUrl": "https://teaching-resources.delta.ncsu.edu/rubric_best-practices-examples-templates/",
+      "examples": {
+        "before": "A single holistic score for a multi-skill capstone.",
+        "after": "An analytic rubric scoring each skill separately.",
+        "why": "Analytic fits uneven multi-skill work; holistic fits quick/subjective."
+      }
+    },
+    {
+      "id": "MOT-1",
+      "category": "motivation",
+      "title": "Design for SDT needs (autonomy/competence/relatedness)",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Meaningful choices, informational feedback, achievable challenge, connection.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Self-determination_theory",
+      "examples": {
+        "before": "A fixed linear path with scores as the only signal.",
+        "after": "Meaningful choices (autonomy) + informational feedback (competence) + cohort touchpoints (relatedness).",
+        "why": "SDT: satisfying the three needs sustains motivation."
+      }
+    },
+    {
+      "id": "MOT-2",
+      "category": "motivation",
+      "title": "Overjustification guardrail",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "No expected task-contingent tangible reward gates a high-interest activity.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Overjustification_effect",
+      "examples": {
+        "before": "\"Earn 500 points for finishing this project you already enjoy.\"",
+        "after": "Show mastery progress; drop the tangible task-contingent reward.",
+        "why": "Expected rewards on interesting tasks crowd out intrinsic motivation."
+      }
+    },
+    {
+      "id": "MOT-3",
+      "category": "motivation",
+      "title": "Progress over social comparison",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "No default public ranking; individual progress view present.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Gamification",
+      "examples": {
+        "before": "A public leaderboard ranking every learner.",
+        "after": "A personal progress-over-time chart.",
+        "why": "Leaderboards demotivate those at the bottom."
+      }
+    },
+    {
+      "id": "MOT-4",
+      "category": "motivation",
+      "title": "Goal-setting paired with planning/SRL support",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Goal-setting features ship with a planning/SRL scaffold.",
+      "sourceUrl": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2024.1511605/full",
+      "examples": {
+        "before": "A one-off \"set a goal\" prompt on day 1.",
+        "after": "Goal + a weekly planning scaffold + self-regulated-learning check-ins.",
+        "why": "Goal prompts alone rarely produce lasting change."
+      }
+    },
+    {
+      "id": "MOT-5",
+      "category": "motivation",
+      "title": "Gamification rewards are competence-informational",
+      "tier": "inference",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Rewards express progress toward mastery, never controlling contingencies.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Self-determination_theory",
+      "examples": {
+        "before": "Badges framed as \"unlock to win.\"",
+        "after": "Badges framed as \"you can now do X.\"",
+        "why": "Competence-informational rewards, not controlling contingencies."
+      }
+    },
+    {
+      "id": "MOT-6",
+      "category": "motivation",
+      "title": "Celebration optional + reduced-motion aware",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Celebration honors prefers-reduced-motion and a user toggle.",
+      "sourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion",
+      "examples": {
+        "before": "Auto confetti + sound on every interaction.",
+        "after": "Optional celebration that honors prefers-reduced-motion and a quiet-mode toggle.",
+        "why": "Surprise motion/sound can overwhelm; tie celebration to real accomplishment."
+      }
+    },
+    {
+      "id": "NEU-1",
+      "category": "accessibility",
+      "title": "No dyslexia-treatment fonts as default",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Font allowlist excludes dyslexia-'treatment' faces as defaults; content must not prescribe them.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5629233/",
+      "examples": {
+        "before": "Default font set to OpenDyslexic \"for dyslexic users.\"",
+        "after": "Well-spaced Arial/Verdana default; Atkinson Hyperlegible offered as an option.",
+        "why": "Dyslexia-specific fonts lack RCT support and can reduce fluency."
+      }
+    },
+    {
+      "id": "NEU-2",
+      "category": "accessibility",
+      "title": "Readability defaults + no ALL CAPS walls",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Flag ALL-CAPS runs (>=3 consecutive caps words) and wall-of-text paragraphs beyond the readability threshold in lesson bodies.",
+      "sourceUrl": "https://cdn.bdadyslexia.org.uk/documents/Advice/style-guide/BDA-Style-Guide-2023.pdf",
+      "examples": {
+        "before": "A 600-word justified single paragraph.",
+        "after": "Short left-aligned paragraphs with headings and adjustable line spacing.",
+        "why": "Readability structure aids all readers, dyslexic ones especially."
+      }
+    },
+    {
+      "id": "NEU-3",
+      "category": "accessibility",
+      "title": "Accessible authentication (WCAG 2.2 SC 3.3.8)",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Allow paste + autocomplete; no cognitive-test CAPTCHA without alternative.",
+      "sourceUrl": "https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/",
+      "examples": {
+        "before": "Login requires retyping the password, blocks paste, and gates on a text CAPTCHA.",
+        "after": "Allow paste + autocomplete; provide a non-cognitive auth alternative.",
+        "why": "WCAG 2.2 SC 3.3.8 Accessible Authentication."
+      }
+    },
+    {
+      "id": "NEU-4",
+      "category": "accessibility",
+      "title": "Redundant entry (WCAG 2.2 SC 3.3.7)",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "No field re-requests earlier-supplied data.",
+      "sourceUrl": "https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/",
+      "examples": {
+        "before": "Step 3 asks the learner to re-enter the email from step 1.",
+        "after": "Auto-fill or offer it as a selectable value.",
+        "why": "WCAG 2.2 SC 3.3.7 Redundant Entry."
+      }
+    },
+    {
+      "id": "NEU-5",
+      "category": "accessibility",
+      "title": ">=3 palettes via a switcher on every page",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": ">=3 palette token sets; switcher present on every page.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6485264/",
+      "examples": {
+        "before": "A single hard-coded high-contrast black-on-white theme.",
+        "after": "Default + low-stimulation + dark palettes, switchable from every page.",
+        "why": "Maximal contrast can be painful for autistic users; offer options."
+      }
+    },
+    {
+      "id": "NEU-6",
+      "category": "accessibility",
+      "title": "Breadcrumbs, bidirectional font sizing, stable nav",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Breadcrumb at all depths; font control decreases and increases; nav coordinates stable.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6485264/",
+      "examples": {
+        "before": "No breadcrumbs; the menu moves position per page.",
+        "after": "Breadcrumbs at every depth, stable nav, and a font-size +/- control.",
+        "why": "Consistency and orientation reduce cognitive load."
+      }
+    },
+    {
+      "id": "NEU-7",
+      "category": "accessibility",
+      "title": "One-interaction stop on auto-content + resume",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Every auto-content element has a 1-step stop; resume state persisted.",
+      "sourceUrl": "https://www.w3.org/TR/coga-usable/",
+      "examples": {
+        "before": "An auto-advancing carousel with no stop control.",
+        "after": "A one-click stop plus \"resume where I left off.\"",
+        "why": "COGA: users must be able to stop auto-updating content."
+      }
+    },
+    {
+      "id": "NEU-8",
+      "category": "accessibility",
+      "title": "Never color/emoji-only status",
+      "tier": "strong",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Every status token/indicator has a text equivalent; flag emoji-only status markers in content.",
+      "sourceUrl": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "examples": {
+        "before": "A red dot 🔴 alone means \"blocked.\"",
+        "after": "\"Blocked\" text + an icon + color.",
+        "why": "Never encode status by color/emoji alone (WCAG 1.4.1)."
+      }
+    },
+    {
+      "id": "NEU-9",
+      "category": "accessibility",
+      "title": "Honor reduced-motion / forced-colors / contrast",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "A reduced-motion path exists for every animation.",
+      "sourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion",
+      "examples": {
+        "before": "Animations play regardless of the OS motion setting.",
+        "after": "@media (prefers-reduced-motion: reduce) collapses motion, plus an in-app control.",
+        "why": "Respects vestibular and attention needs."
+      }
+    },
+    {
+      "id": "NEU-10",
+      "category": "accessibility",
+      "title": "Literal, specific language for autistic learners",
+      "tier": "moderate",
+      "scope": "content",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Copy linter flags common idioms and ambiguous directional phrases in instructional text.",
+      "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6485264/",
+      "examples": {
+        "before": "\"This next part should be a piece of cake.\"",
+        "after": "\"This next task is short and has three steps.\"",
+        "why": "Literal, specific language aids autistic learners."
+      }
+    },
+    {
+      "id": "NEU-11",
+      "category": "accessibility",
+      "title": "W3C COGA objective checklist per build",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "COGA 8-point checklist attached to each course build.",
+      "sourceUrl": "https://www.w3.org/TR/coga-usable/",
+      "examples": {
+        "before": "Ship a course build with no cognitive-accessibility review.",
+        "after": "Attach the 8-point W3C COGA checklist to the build.",
+        "why": "Systematic COGA coverage, not ad-hoc."
+      }
+    },
+    {
+      "id": "NEU-12",
+      "category": "accessibility",
+      "title": "Personalization = pacing/palette/type/difficulty, not modality-to-style",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Preference values validated against an allowlist; never inject arbitrary CSS.",
+      "sourceUrl": "https://www.w3.org/WAI/personalization/",
+      "examples": {
+        "before": "A preferences field injects arbitrary CSS supplied by the user.",
+        "after": "Preferences chosen from an allowlist (pacing, palette, type, density, difficulty), validated server-side.",
+        "why": "Safe personalization — and not modality-to-style matching."
+      }
+    },
+    {
+      "id": "TEC-1",
+      "category": "authoring",
+      "title": "ARIA tabs pattern complete",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "tablist/tab/tabpanel roles + paired ids.",
+      "sourceUrl": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
+      "examples": {
+        "before": "<div class=\"tab\" onclick=\"…\">",
+        "after": "role=\"tablist\" > role=\"tab\" (aria-selected, aria-controls) + role=\"tabpanel\" (aria-labelledby).",
+        "why": "Assistive tech can't interpret click-wired divs."
+      }
+    },
+    {
+      "id": "TEC-2",
+      "category": "authoring",
+      "title": "ARIA tabs keyboard wiring",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Arrow/Tab/Space-Enter; Up/Down only if vertical.",
+      "sourceUrl": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",
+      "examples": {
+        "before": "Tabs are only mouse-clickable.",
+        "after": "Arrow Left/Right move between tabs; Enter/Space activates.",
+        "why": "Full keyboard operability per the APG."
+      }
+    },
+    {
+      "id": "TEC-3",
+      "category": "authoring",
+      "title": "ARIA modal dialog pattern complete",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "role/aria-modal/label/focus-trap/Escape/focus-restore/inert.",
+      "sourceUrl": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "examples": {
+        "before": "A modal with no focus trap and no Escape handler.",
+        "after": "role=\"dialog\" aria-modal, focus trap, Escape to close, focus restored to the invoker, background inert.",
+        "why": "Keyboard and screen-reader users must not escape into hidden content."
+      }
+    },
+    {
+      "id": "TEC-4",
+      "category": "authoring",
+      "title": "Custom widgets implement full WAI-ARIA pattern",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Prefer native HTML; custom widget passes its full APG checklist.",
+      "sourceUrl": "https://www.w3.org/WAI/ARIA/apg/",
+      "examples": {
+        "before": "role=\"combobox\" on a div, with nothing else implemented.",
+        "after": "The complete combobox pattern (focus, active-descendant, keys) — or a native <select>.",
+        "why": "A role attribute alone does not implement the pattern."
+      }
+    },
+    {
+      "id": "TEC-5",
+      "category": "authoring",
+      "title": "Design tokens in DTCG format, single source",
+      "tier": "strong",
+      "scope": "platform",
+      "automatable": true,
+      "checkType": "auto",
+      "check": "Valid JSON *.tokens.json; token iff $value; name rules; $type present/inherited; no reference cycles.",
+      "sourceUrl": "https://www.designtokens.org/tr/2025.10/format/",
+      "examples": {
+        "before": "Brand color duplicated in CSS variables, designtokens.js, and Tailwind config.",
+        "after": "One .tokens.json ($value/$type) as the source; generate CSS/constants from it.",
+        "why": "Parallel token sources drift; a single DTCG source doesn't."
+      }
+    },
+    {
+      "id": "TEC-6",
+      "category": "authoring",
+      "title": "cmi5 (not SCORM) for LMS interop",
+      "tier": "moderate",
+      "scope": "platform",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Package protocol = cmi5; verbs from cmi5 vocabulary.",
+      "sourceUrl": "https://xapi.com/cmi5/",
+      "examples": {
+        "before": "A SCORM 1.2 package with no out-of-LMS tracking.",
+        "after": "A cmi5 package using controlled-vocabulary verbs (completed/passed/scored).",
+        "why": "cmi5/xAPI tracks experiences SCORM can't."
+      }
+    },
+    {
+      "id": "TEC-7",
+      "category": "pipeline",
+      "title": ">=2 checkpoints before ready",
+      "tier": "moderate",
+      "scope": "pipeline",
+      "automatable": false,
+      "checkType": "human",
+      "check": "(1) after options proposed, (2) after alignment checked.",
+      "sourceUrl": "https://arxiv.org/abs/2503.08931",
+      "examples": {
+        "before": "The LLM emits a final quiz in a single unchecked step.",
+        "after": "Propose options → objective-alignment check → commit (≥2 gates).",
+        "why": "Unchecked generation ships hallucinations and misalignment."
+      }
+    },
+    {
+      "id": "TEC-8",
+      "category": "pipeline",
+      "title": "No single-LLM-judge quality gate",
+      "tier": "moderate",
+      "scope": "pipeline",
+      "automatable": false,
+      "checkType": "human",
+      "check": "Multi-model panel OR >=1 non-LLM check.",
+      "sourceUrl": "https://arxiv.org/abs/2508.05929",
+      "examples": {
+        "before": "A single GPT judge approves generated content.",
+        "after": "A multi-model panel or ≥1 non-LLM check (human, or retrieval against a curriculum KB).",
+        "why": "Single LLM-as-judge has systematic bias."
+      }
+    }
+  ]
+}
