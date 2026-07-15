@@ -1,0 +1,44 @@
+{
+  "name": "learnkit",
+  "version": "1.0.0",
+  "description": "LearnKit — a neuroinclusive-coursework kit: evidence-based rules, schemas, and auditors for designing and generating instructional content for any subject.",
+  "keywords": [
+    "instructional-design",
+    "neuroinclusive",
+    "neurodivergent",
+    "accessibility",
+    "coursework",
+    "learning-science",
+    "udl",
+    "wcag",
+    "education"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "learnkit": "bin/learnkit.ts"
+  },
+  "files": [
+    "src",
+    "bin",
+    "docs",
+    "examples",
+    "LICENSE",
+    "LICENSE-docs"
+  ],
+  "scripts": {
+    "audit": "tsx src/audit-content.ts",
+    "audit:sample": "tsx src/audit-content.ts examples/sample-course.json",
+    "audit:platform": "tsx src/audit-platform.ts",
+    "rules": "tsx bin/learnkit.ts rules",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
