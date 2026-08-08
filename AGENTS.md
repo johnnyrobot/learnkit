@@ -27,7 +27,7 @@ npx tsx src/audit-platform.ts --dir path/to/styles
 Use it as a build gate by importing the API:
 
 ```ts
-import { auditCourse, loadCourses } from "learnkit"; // or "./src/audit-content"
+import { auditCourse, loadCourses } from "@johnnyrobot/learnkit";
 ```
 
 Fail the build when any finding has `severity === "error"`.

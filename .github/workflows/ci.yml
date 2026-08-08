@@ -70,9 +70,9 @@ jobs:
           mkdir -p /tmp/consumer && cd /tmp/consumer
           npm init -y > /dev/null
           npm pkg set type=module > /dev/null
-          npm install /tmp/learnkit-*.tgz
+          npm install /tmp/*learnkit-*.tgz
           cat > gate.mjs <<'EOF'
-          import { auditCourse, loadCourses, ruleset } from "learnkit";
+          import { auditCourse, loadCourses, ruleset } from "@johnnyrobot/learnkit";
           if (!ruleset.rules.length) { console.error("ruleset failed to load"); process.exit(1); }
           const courses = loadCourses(process.argv[2]);
           const errors = Object.entries(courses)

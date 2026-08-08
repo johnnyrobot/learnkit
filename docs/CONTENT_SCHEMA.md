@@ -68,6 +68,54 @@ type Question = {
 type Flashcard = { contentId: string; objective?: string; front?: string; back?: string };
 ```
 
+## Rubric
+
+Optional. Omit `rubrics` entirely and RUB-1 is simply not applicable — it reports nothing rather
+than pretending to have checked.
+
+```ts
+type RubricLevel = {
+  label: string;       // e.g. "Developing" — keep the same set across every criterion (RUB-1)
+  descriptor: string;  // observable performance and its consequence, not a grade
+};
+type RubricCriterion = { name: string; levels: RubricLevel[] };
+type Rubric = {
+  contentId: string;
+  title?: string;
+  domainName?: string;
+  objective?: string;
+  criteria: RubricCriterion[];
+};
+```
+
+RUB-1 checks four descriptor mechanics:
+
+| Severity | Condition |
+|---|---|
+| error | a descriptor that is empty, or whose whole substance is an evaluative adjective — `"Excellent work"`, `"Poor."`, `"Adequate"`. These grade the learner instead of describing the work |
+| warn | a descriptor built on a tally with no consequence named — `"3 or more errors"`. Say what the errors *do*: `"Errors interrupt the reader often enough that they lose the thread"` |
+| warn | criteria that do not share a parallel set of level labels, so the levels cannot be compared across criteria |
+| info | descriptors totalling more than ~2500 characters — past roughly one page, a rubric stops being used |
+
+An adjective appearing inside an otherwise concrete sentence is fine. The error fires only when the
+adjective *is* the descriptor.
+
+## Assessment type (ASM-1)
+
+`Question.assessmentType` is `"formative"` or `"summative"`. Formative items are low-stakes practice;
+summative items are graded.
+
+| Severity | Condition |
+|---|---|
+| error | an item carries no `assessmentType` — the rule cannot be verified, so it is not claimed |
+| error | an unrecognized value (anything but `formative` / `summative`) |
+| error | a domain has summative items but no formative check — learners meet the graded item first |
+| warn | a domain places a summative item before its first formative one |
+
+Items are grouped into domains through the objective each one assesses. Ordering uses **document
+order**, since that is the only sequence the schema carries — if your pipeline emits items out of
+delivery order, sort them before auditing.
+
 ## ID alignment
 
 Objective IDs tie the model together. A lesson's `objectiveTags` and a question's `objective` are

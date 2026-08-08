@@ -1,12 +1,16 @@
 {
-  "_comment": "LearnKit sample course — a clean, subject-agnostic example that passes `learnkit audit` with zero findings. Use it as a template for the content schema (see docs/CONTENT_SCHEMA.md). Note the good-practice patterns: each objective is taught by >=2 lessons (spacing), every question carries a cognitiveLevel and a per-choice rationale (informational feedback), the item mix favors application over recall, and learning outcomes use single measurable verbs.",
+  "_comment": "LearnKit sample course — a clean, subject-agnostic example that passes `learnkit audit` with zero findings. Use it as a template for the content schema (see docs/CONTENT_SCHEMA.md). Note the good-practice patterns: each objective is taught by >=2 lessons (spacing), every question carries a cognitiveLevel and a per-choice rationale (informational feedback), every item carries a formative/summative role with practice before the graded item (ASM-1), the rubric describes observable performance and its impact rather than grading adjectives (RUB-1), the item mix favors application over recall, and learning outcomes use single measurable verbs.",
   "version": 2,
   "courses": {
     "photosynthesis-basics": {
       "objectivesByDomain": [
         {
           "domainName": "Photosynthesis Basics",
-          "objectives": ["PB-1.1", "PB-1.2", "PB-1.3"]
+          "objectives": [
+            "PB-1.1",
+            "PB-1.2",
+            "PB-1.3"
+          ]
         }
       ],
       "lessons": [
@@ -17,7 +21,9 @@
           "order": 1,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 20,
-          "objectiveTags": ["PB-1.1"],
+          "objectiveTags": [
+            "PB-1.1"
+          ],
           "body": "# What Photosynthesis Makes\n\n## Learning Outcomes\n\n- Identify the inputs and outputs of photosynthesis.\n- Describe where photosynthesis happens in a plant cell.\n\n## Key Terms\n\n| Term | Working meaning |\n| --- | --- |\n| photosynthesis | how plants turn light, water, and carbon dioxide into sugar and oxygen |\n| chloroplast | the part of a plant cell where photosynthesis happens |\n\n## Core Idea\n\nPlants take in water and carbon dioxide. Using light, they make glucose (a sugar) and release oxygen. The sugar stores energy the plant uses to grow.\n"
         },
         {
@@ -27,7 +33,9 @@
           "order": 2,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 20,
-          "objectiveTags": ["PB-1.2"],
+          "objectiveTags": [
+            "PB-1.2"
+          ],
           "body": "# Light and Chlorophyll\n\n## Learning Outcomes\n\n- Explain how chlorophyll captures light energy.\n- Identify the color of light chlorophyll absorbs most.\n\n## Core Idea\n\nChlorophyll is the green pigment in chloroplasts. It absorbs red and blue light and reflects green, which is why leaves look green. The captured light energy powers the chemical reaction that builds sugar.\n"
         },
         {
@@ -37,7 +45,9 @@
           "order": 3,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 15,
-          "objectiveTags": ["PB-1.1"],
+          "objectiveTags": [
+            "PB-1.1"
+          ],
           "body": "# Inputs Revisited: Water and Carbon Dioxide\n\n## Learning Outcomes\n\n- Trace how water and carbon dioxide reach the chloroplast.\n\n## Core Idea\n\nRoots absorb water; leaves take in carbon dioxide through small pores called stomata. Both travel to the chloroplast, where they become raw material for making sugar. This lesson revisits the inputs you met earlier so the idea sticks.\n"
         },
         {
@@ -47,7 +57,9 @@
           "order": 4,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 25,
-          "objectiveTags": ["PB-1.3"],
+          "objectiveTags": [
+            "PB-1.3"
+          ],
           "body": "# Photosynthesis vs Respiration\n\n## Learning Outcomes\n\n- Compare the inputs and outputs of photosynthesis and respiration.\n\n## Comparison\n\n| Process | Inputs | Outputs |\n| --- | --- | --- |\n| photosynthesis | light, water, carbon dioxide | glucose, oxygen |\n| respiration | glucose, oxygen | energy, water, carbon dioxide |\n\nThe two processes are near mirror images: one stores energy in sugar, the other releases it.\n"
         },
         {
@@ -57,7 +69,9 @@
           "order": 5,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 15,
-          "objectiveTags": ["PB-1.2"],
+          "objectiveTags": [
+            "PB-1.2"
+          ],
           "body": "# Chlorophyll in Depth\n\n## Learning Outcomes\n\n- Explain why a leaf appears green.\n\n## Core Idea\n\nBecause chlorophyll absorbs red and blue light and reflects green light, the light that bounces back to your eye is green. Revisiting chlorophyll here spaces your practice across two sessions.\n"
         },
         {
@@ -67,7 +81,9 @@
           "order": 6,
           "domainName": "Photosynthesis Basics",
           "estimatedMinutes": 20,
-          "objectiveTags": ["PB-1.3"],
+          "objectiveTags": [
+            "PB-1.3"
+          ],
           "body": "# Comparing Energy Pathways\n\n## Learning Outcomes\n\n- Analyze how energy moves between photosynthesis and respiration in an ecosystem.\n\n## Core Idea\n\nPlants build sugar and store energy; animals and plants both release that energy through respiration. Following the energy from sunlight to sugar to movement shows how the two processes connect.\n"
         }
       ],
@@ -77,56 +93,80 @@
           "objective": "PB-1.1",
           "cognitiveLevel": "UNDERSTAND",
           "stem": "Which pair lists the main inputs a plant uses during photosynthesis?",
-          "choices": ["Water and carbon dioxide", "Oxygen and glucose", "Nitrogen and sugar", "Oxygen and water"],
+          "choices": [
+            "Water and carbon dioxide",
+            "Oxygen and glucose",
+            "Nitrogen and sugar",
+            "Oxygen and water"
+          ],
           "correctIndex": 0,
           "choiceRationales": [
             "Correct: water and carbon dioxide are the raw materials the plant combines using light.",
             "Wrong: oxygen and glucose are the outputs of photosynthesis, not the inputs.",
             "Wrong: nitrogen is not a direct input to the photosynthesis reaction.",
             "Wrong: oxygen is released, not consumed, during photosynthesis."
-          ]
+          ],
+          "assessmentType": "formative"
         },
         {
           "contentId": "pb-1-1-q2",
           "objective": "PB-1.1",
           "cognitiveLevel": "APPLY",
           "stem": "A sealed jar holds a healthy plant in bright light. Which gas will increase inside the jar?",
-          "choices": ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"],
+          "choices": [
+            "Oxygen",
+            "Carbon dioxide",
+            "Nitrogen",
+            "Hydrogen"
+          ],
           "correctIndex": 0,
           "choiceRationales": [
             "Correct: in light the plant photosynthesizes and releases oxygen, so oxygen rises.",
             "Wrong: carbon dioxide is consumed during photosynthesis, so it falls in the light.",
             "Wrong: nitrogen is not produced or consumed by photosynthesis.",
             "Wrong: hydrogen gas is not an output of photosynthesis."
-          ]
+          ],
+          "assessmentType": "summative"
         },
         {
           "contentId": "pb-1-2-q1",
           "objective": "PB-1.2",
           "cognitiveLevel": "UNDERSTAND",
           "stem": "Why does a healthy leaf appear green to our eyes?",
-          "choices": ["Chlorophyll reflects green light", "Chlorophyll absorbs green light", "Leaves emit green light", "Water in the leaf is green"],
+          "choices": [
+            "Chlorophyll reflects green light",
+            "Chlorophyll absorbs green light",
+            "Leaves emit green light",
+            "Water in the leaf is green"
+          ],
           "correctIndex": 0,
           "choiceRationales": [
             "Correct: chlorophyll absorbs red and blue light and reflects green, which reaches your eye.",
             "Wrong: chlorophyll mostly absorbs red and blue, not green.",
             "Wrong: leaves reflect light; they do not emit their own green light.",
             "Wrong: the water in a leaf is not what gives it a green color."
-          ]
+          ],
+          "assessmentType": "formative"
         },
         {
           "contentId": "pb-1-2-q2",
           "objective": "PB-1.2",
           "cognitiveLevel": "RECALL",
           "stem": "What is the green pigment in a chloroplast called?",
-          "choices": ["Chlorophyll", "Glucose", "Stomata", "Carotene"],
+          "choices": [
+            "Chlorophyll",
+            "Glucose",
+            "Stomata",
+            "Carotene"
+          ],
           "correctIndex": 0,
           "choiceRationales": [
             "Correct: chlorophyll is the green pigment that captures light for photosynthesis.",
             "Wrong: glucose is the sugar produced, not a pigment.",
             "Wrong: stomata are pores for gas exchange, not a pigment.",
             "Wrong: carotene is an orange pigment, not the main green one."
-          ]
+          ],
+          "assessmentType": "summative"
         },
         {
           "contentId": "pb-1-3-q1",
@@ -145,21 +185,28 @@
             "Wrong: their inputs differ — one takes in carbon dioxide, the other takes in oxygen.",
             "Wrong: respiration consumes oxygen rather than releasing it.",
             "Wrong: glucose is central to both processes."
-          ]
+          ],
+          "assessmentType": "formative"
         },
         {
           "contentId": "pb-1-3-q2",
           "objective": "PB-1.3",
           "cognitiveLevel": "APPLY",
           "stem": "At night a plant cannot photosynthesize. Which process still keeps its cells supplied with energy?",
-          "choices": ["Respiration", "Photosynthesis", "Evaporation", "Germination"],
+          "choices": [
+            "Respiration",
+            "Photosynthesis",
+            "Evaporation",
+            "Germination"
+          ],
           "correctIndex": 0,
           "choiceRationales": [
             "Correct: respiration releases stored energy from glucose and runs day and night.",
             "Wrong: photosynthesis needs light, so it stops at night.",
             "Wrong: evaporation moves water; it does not supply cellular energy.",
             "Wrong: germination is a growth stage, not an energy-supplying process."
-          ]
+          ],
+          "assessmentType": "summative"
         }
       ],
       "flashcards": [
@@ -174,6 +221,50 @@
           "objective": "PB-1.2",
           "front": "Why do leaves look green?",
           "back": "Chlorophyll absorbs red and blue light and reflects green, so green light reaches your eye."
+        }
+      ],
+      "rubrics": [
+        {
+          "contentId": "photosynthesis-explanation-rubric",
+          "title": "Explaining photosynthesis in your own words",
+          "domainName": "Photosynthesis Basics",
+          "objective": "PB-1.1",
+          "criteria": [
+            {
+              "name": "Accuracy of the process",
+              "levels": [
+                {
+                  "label": "Developing",
+                  "descriptor": "Inputs and outputs are swapped or missing, so a reader would come away believing plants consume oxygen."
+                },
+                {
+                  "label": "Proficient",
+                  "descriptor": "Inputs and outputs are correct, and a reader can trace what enters the leaf and what leaves it."
+                },
+                {
+                  "label": "Exemplary",
+                  "descriptor": "Inputs and outputs are correct and tied to the energy stored in glucose, so a reader can predict what happens when light is removed."
+                }
+              ]
+            },
+            {
+              "name": "Clarity for a new reader",
+              "levels": [
+                {
+                  "label": "Developing",
+                  "descriptor": "Key terms appear before they are defined, which forces the reader to stop and guess."
+                },
+                {
+                  "label": "Proficient",
+                  "descriptor": "Each key term is defined where it first appears, so the reader can follow the explanation straight through."
+                },
+                {
+                  "label": "Exemplary",
+                  "descriptor": "Each key term is defined on first use and tied to a concrete example, so the reader can restate the idea unprompted."
+                }
+              ]
+            }
+          ]
         }
       ]
     }

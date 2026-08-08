@@ -1,5 +1,5 @@
 {
-  "name": "learnkit",
+  "name": "@johnnyrobot/learnkit",
   "version": "1.0.0",
   "description": "LearnKit — a neuroinclusive-coursework kit: evidence-based rules, schemas, and auditors for designing and generating instructional content for any subject.",
   "keywords": [
@@ -16,9 +16,16 @@
   "license": "(MIT AND CC-BY-4.0)",
   "author": "johnnyrobot",
   "homepage": "https://github.com/johnnyrobot/learnkit#readme",
-  "repository": { "type": "git", "url": "git+https://github.com/johnnyrobot/learnkit.git" },
-  "bugs": { "url": "https://github.com/johnnyrobot/learnkit/issues" },
-  "engines": { "node": ">=20" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnyrobot/learnkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johnnyrobot/learnkit/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "type": "module",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -58,5 +65,8 @@
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
     "vitest": "^4.1.10"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

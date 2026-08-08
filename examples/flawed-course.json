@@ -68,7 +68,8 @@
             "Nitrogen",
             "Methane"
           ],
-          "correctIndex": 0
+          "correctIndex": 0,
+          "assessmentType": "summative"
         },
         {
           "contentId": "q-recall-2",
@@ -81,7 +82,8 @@
             "Blue"
           ],
           "correctIndex": 0,
-          "explanation": "Chlorophyll reflects green light, which is why leaves look green."
+          "explanation": "Chlorophyll reflects green light, which is why leaves look green.",
+          "assessmentType": "summative"
         },
         {
           "contentId": "q-untaught",
@@ -93,6 +95,44 @@
             "Ferredoxin"
           ],
           "correctIndex": 0
+        }
+      ],
+      "rubrics": [
+        {
+          "contentId": "essay-rubric",
+          "title": "Photosynthesis essay rubric",
+          "criteria": [
+            {
+              "name": "Content",
+              "levels": [
+                {
+                  "label": "Poor",
+                  "descriptor": "Poor."
+                },
+                {
+                  "label": "OK",
+                  "descriptor": "Adequate work."
+                },
+                {
+                  "label": "Great",
+                  "descriptor": "Excellent work"
+                }
+              ]
+            },
+            {
+              "name": "Mechanics",
+              "levels": [
+                {
+                  "label": "Low",
+                  "descriptor": "3 or more errors."
+                },
+                {
+                  "label": "High",
+                  "descriptor": "no more than 1 error."
+                }
+              ]
+            }
+          ]
         }
       ]
     }

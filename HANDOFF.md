@@ -57,6 +57,5 @@ npm run rules            # lists 57 rules + 7 prohibited patterns
   `gh repo edit johnnyrobot/learnkit --visibility public --accept-visibility-change-consequences`.
 - Not yet published to npm. The package builds and installs correctly (CI proves it by installing the
   tarball each run); `npm publish` is the only remaining step.
-- `ASM-1` and `RUB-1` are content-scoped and automatable in principle, but need schema fields the kit
-  does not define yet (formative/summative labels; rubrics). They are listed as not implemented in the
-  coverage footer rather than silently claimed.
+- All 18 content-scoped automatable rules are implemented. The remaining 39 need a platform, a
+  pipeline, or human review, and the coverage footer says so on every run.

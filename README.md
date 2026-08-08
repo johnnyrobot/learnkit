@@ -33,7 +33,7 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 Use it as a dependency:
 
 ```bash
-npm install learnkit
+npm install @johnnyrobot/learnkit
 npx learnkit audit path/to/your-course.json
 npx learnkit rules
 ```
@@ -73,17 +73,19 @@ gate on content the auditor never read. Instead, a document matching neither acc
 (exit 2), and a drifted field name, a wrong-typed collection, or a course with nothing in it reports as
 an error-severity `SCHEMA` finding. A clean audit means *read and passed*, never *could not find it*.
 
-**The coverage footer names what it did not check.** It lists the rules that need
-platform/pipeline/human review, and separately the content rules that are automatable in principle but
-not yet implemented here. The footer may only claim a rule that `examples/flawed-course.json` proves
-the auditor can actually emit — `npm test` fails if the two ever drift apart.
+**The coverage footer names what it did not check.** All 18 content-scoped automatable rules are
+implemented; the other 39 need a platform, a pipeline, or human judgement, and the footer lists them
+by ID on every run. If a rule is ever automatable in principle but not implemented here, it gets its
+own line rather than being quietly folded in with the rest. The footer may only claim a rule that
+`examples/flawed-course.json` proves the auditor can actually emit — `npm test` fails if the two ever
+drift apart.
 
 ## As a build gate
 
 Fail your content build when any finding is an error:
 
 ```ts
-import { auditCourse, loadCourses } from "learnkit";
+import { auditCourse, loadCourses } from "@johnnyrobot/learnkit";
 
 const courses = loadCourses("build/course-bundle.json");
 let errors = 0;

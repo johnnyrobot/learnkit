@@ -41,6 +41,8 @@ type Question = {
   contentId: string;
   objective?: string;
   cognitiveLevel?: string;
+  /** ASM-1: "formative" (practice, low stakes) or "summative" (graded). */
+  assessmentType?: string;
   stem?: string;
   choices?: string[];
   correctIndex?: number;
@@ -48,11 +50,16 @@ type Question = {
   explanation?: string;
 };
 type Flashcard = { contentId: string; objective?: string; front?: string; back?: string };
+/** RUB-1: one performance level of one criterion. */
+type RubricLevel = { label: string; descriptor: string };
+type RubricCriterion = { name: string; levels: RubricLevel[] };
+type Rubric = { contentId: string; title?: string; domainName?: string; objective?: string; criteria: RubricCriterion[] };
 export type Course = {
   objectivesByDomain?: ObjectiveDomain[];
   lessons?: Lesson[];
   questions?: Question[];
   flashcards?: Flashcard[];
+  rubrics?: Rubric[];
 };
 type Bundle = { courses: Record<string, Course> };
 type Rule = {
@@ -98,7 +105,7 @@ const contentAuto = ruleset.rules.filter((r) => r.scope === "content" && r.autom
  */
 export const IMPLEMENTED_CONTENT_RULES = [
   "OBJ-1", "OBJ-2", "OBJ-4", "OBJ-7", "STR-1", "STR-2", "MM-1", "MM-2", "MM-3",
-  "SPC-1", "SPC-2", "ASM-3", "FBK-1", "NEU-2", "NEU-8", "NEU-10",
+  "SPC-1", "SPC-2", "ASM-1", "ASM-3", "FBK-1", "RUB-1", "NEU-2", "NEU-8", "NEU-10",
 ] as const;
 
 /** Content-scoped rules RULES.json marks automatable that this auditor does not yet check. */
@@ -116,11 +123,12 @@ export { contentAuto, ruleById, ruleset };
  * impossible: structurally impossible documents throw at load time, and misspelled field names
  * surface as error-severity SCHEMA findings instead of as a silent absence of findings.
  */
-const COURSE_KEYS = ["objectivesByDomain", "lessons", "questions", "flashcards"] as const;
+const COURSE_KEYS = ["objectivesByDomain", "lessons", "questions", "flashcards", "rubrics"] as const;
 const LESSON_KEYS = ["contentId", "title", "slug", "order", "domainName", "estimatedMinutes", "objectiveTags", "body"];
-const QUESTION_KEYS = ["contentId", "objective", "cognitiveLevel", "stem", "choices", "correctIndex", "choiceRationales", "explanation"];
+const QUESTION_KEYS = ["contentId", "objective", "cognitiveLevel", "assessmentType", "stem", "choices", "correctIndex", "choiceRationales", "explanation"];
 const FLASHCARD_KEYS = ["contentId", "objective", "front", "back"];
 const DOMAIN_KEYS = ["domainName", "objectives"];
+const RUBRIC_KEYS = ["contentId", "title", "domainName", "objective", "criteria"];
 
 const isObj = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
@@ -200,6 +208,7 @@ function auditShape(course: Course): Finding[] {
   const lessons = collection("lessons", LESSON_KEYS, "slug", ["contentId", "slug", "title"]);
   const questions = collection("questions", QUESTION_KEYS, "contentId", ["contentId", "stem"]);
   collection("flashcards", FLASHCARD_KEYS, "contentId", ["contentId"]);
+  collection("rubrics", RUBRIC_KEYS, "contentId", ["contentId", "criteria"]);
   const domains = collection("objectivesByDomain", DOMAIN_KEYS, "domainName", ["domainName", "objectives"]);
   const objectiveCount = domains.reduce<number>(
     (n, d) => n + (isObj(d) && Array.isArray(d.objectives) ? d.objectives.length : 0),
@@ -231,6 +240,21 @@ const IDIOMS = ["piece of cake", "hit the ground running", "low-hanging fruit", 
 const STYLE_MATCH = /\b(visual|auditory|kinesthetic|kinaesthetic|tactile)\s+learner(s)?\b|\blearning styles?\b/i;
 /** OBJ-4: score/percentage targets turn a mastery objective into a performance goal. */
 const PERFORMANCE_GOAL = /\d{1,3}\s*(%|percent\b)|\bscor(e|ing)\b|\bat least \d+\s*(points?|marks?|questions?)\b|\bpass(ing)? (mark|rate|score)\b|\btop \d+\s*%/i;
+/** ASM-1: the two assessment roles the rule distinguishes. */
+const ASSESSMENT_TYPES = new Set(["formative", "summative"]);
+/**
+ * RUB-1: a descriptor whose substance is an evaluative adjective ("excellent work", "poor structure")
+ * grades the learner instead of describing what the work does. Matches only when the adjective is the
+ * descriptor's whole point — a passing mention inside a longer, concrete sentence is fine.
+ */
+const GENERIC_DESCRIPTOR =
+  /^(?:\W*(?:very|highly|somewhat|fairly|generally|mostly|quite)\s+)?(?:work\s+is\s+)?(?:excellent|great|good|strong|solid|adequate|satisfactory|acceptable|average|fair|weak|poor|bad|inadequate|unsatisfactory|nice|decent)\b[\s\W]*(?:work|effort|quality|job|attempt|response|answer)?[\s\W]*$/i;
+/** RUB-1: a descriptor built on tallies ("3 or more errors", "at least 5 sources"). */
+const COUNT_DESCRIPTOR = /\b(?:\d+|one|two|three|four|five|no|zero|few|several)\s+(?:or\s+(?:more|fewer|less)\s+)?\w+s\b|\bat least \d+|\bno more than \d+|\bfewer than \d+/i;
+/** RUB-1: language that names a consequence, which is what redeems a count. */
+const IMPACT_LANGUAGE = /\b(?:so that|which|because|reader|user|audience|meaning|understand|follow|obscur|confus|clear|unclear|misleads?|prevents?|enables?|impact|result|consequence)/i;
+/** RUB-1: rough "fits on one page" ceiling, in characters of descriptor text. */
+const RUBRIC_PAGE_CHARS = 2500;
 /** NEU-8: glyphs commonly used as a status indicator with no text equivalent. */
 const STATUS_EMOJI =
   /[✅❌✓✔✖✗⚠⭕\u{1F534}\u{1F535}\u{1F6AB}\u{1F7E0}\u{1F7E1}\u{1F7E2}]/u;
@@ -244,6 +268,9 @@ export function auditCourse(id: string, course: Course): Finding[] {
   // auditShape has already reported any wrong-typed collection; coerce so a bad input yields
   // findings rather than a TypeError halfway through the run.
   const findings: Finding[] = auditShape(course);
+  const pushList = (ruleId: string, sev: Severity, list: string[], label: string) => {
+    if (list.length) findings.push({ ruleId, severity: sev, message: `${list.length} ${label}`, examples: first(list) });
+  };
   const lessons = asArray(course.lessons);
   const questions = asArray(course.questions);
   const domains = asArray(course.objectivesByDomain);
@@ -315,6 +342,73 @@ export function auditCourse(id: string, course: Course): Finding[] {
   if (explanationOnly.length)
     findings.push({ ruleId: "FBK-1", severity: "warn", message: `${explanationOnly.length}/${questions.length} item(s) have only a question-level explanation, not per-choice rationales — per-choice feedback is more informational (tells the learner why each distractor is wrong)`, examples: first(explanationOnly.map((q) => q.contentId)) });
 
+  // ASM-1 — a formative check must precede the summative items in each domain.
+  // Document order is the only ordering the schema carries, so it stands in for delivery order;
+  // an authoring pipeline that emits items out of sequence should sort before auditing.
+  const labelled = questions.filter((q) => (q.assessmentType ?? "").trim());
+  const unlabelled = questions.filter((q) => !(q.assessmentType ?? "").trim());
+  const badLabels = labelled.filter((q) => !ASSESSMENT_TYPES.has(q.assessmentType!.trim().toLowerCase()));
+  if (unlabelled.length)
+    findings.push({ ruleId: "ASM-1", severity: "error", message: `${unlabelled.length}/${questions.length} assessment item(s) carry no assessmentType — formative-before-summative cannot be verified`, examples: first(unlabelled.map((q) => q.contentId)) });
+  if (badLabels.length)
+    findings.push({ ruleId: "ASM-1", severity: "error", message: `${badLabels.length} assessment item(s) have an unrecognized assessmentType (expected "formative" or "summative")`, examples: first(badLabels.map((q) => `${q.contentId}: "${q.assessmentType}"`)) });
+
+  // Group by domain via the objective each item assesses; ungrouped items fall under one bucket.
+  const domainOfObjective = new Map<string, string>();
+  for (const d of domains)
+    for (const o of asArray(d?.objectives)) domainOfObjective.set(normObj(String(o)), String(d.domainName ?? "(unnamed domain)"));
+  const byDomain = new Map<string, Question[]>();
+  questions.forEach((q) => {
+    const key = domainOfObjective.get(normObj(q.objective)) ?? "(no domain)";
+    if (!byDomain.has(key)) byDomain.set(key, []);
+    byDomain.get(key)!.push(q);
+  });
+  const noFormative: string[] = [];
+  const summativeFirst: string[] = [];
+  for (const [domain, items] of byDomain) {
+    const typeAt = (q: Question) => (q.assessmentType ?? "").trim().toLowerCase();
+    const firstFormative = items.findIndex((q) => typeAt(q) === "formative");
+    const firstSummative = items.findIndex((q) => typeAt(q) === "summative");
+    if (firstSummative >= 0 && firstFormative < 0) noFormative.push(domain);
+    else if (firstSummative >= 0 && firstFormative > firstSummative)
+      summativeFirst.push(`${domain}: ${items[firstSummative].contentId} precedes ${items[firstFormative].contentId}`);
+  }
+  if (noFormative.length)
+    findings.push({ ruleId: "ASM-1", severity: "error", message: `${noFormative.length} domain(s) have summative items but no formative check — learners meet the graded item first`, examples: first(noFormative) });
+  if (summativeFirst.length)
+    findings.push({ ruleId: "ASM-1", severity: "warn", message: `${summativeFirst.length} domain(s) place a summative item before the first formative one`, examples: first(summativeFirst) });
+
+  // RUB-1 — rubric descriptor mechanics. N/A when the course carries no rubrics.
+  const rubrics = asArray(course.rubrics);
+  const genericDescriptors: string[] = [];
+  const countDescriptors: string[] = [];
+  const nonParallel: string[] = [];
+  const overLong: string[] = [];
+  for (const r of rubrics) {
+    const criteria = asArray(r?.criteria);
+    const levelShapes = new Set<string>();
+    let descriptorChars = 0;
+    for (const c of criteria) {
+      const levels = asArray(c?.levels);
+      levelShapes.add(levels.map((l) => String(l?.label ?? "").trim().toLowerCase()).join("|"));
+      for (const l of levels) {
+        const text = String(l?.descriptor ?? "").trim();
+        descriptorChars += text.length;
+        const where = `${r.contentId}/${c?.name ?? "?"}/${l?.label ?? "?"}`;
+        // A descriptor carried by an evaluative adjective states a grade, not observable performance.
+        if (!text || GENERIC_DESCRIPTOR.test(text)) genericDescriptors.push(`${where}: "${text.slice(0, 40)}"`);
+        // A count with no consequence tells the learner what to tally, not what good work does.
+        else if (COUNT_DESCRIPTOR.test(text) && !IMPACT_LANGUAGE.test(text)) countDescriptors.push(`${where}: "${text.slice(0, 40)}"`);
+      }
+    }
+    if (levelShapes.size > 1) nonParallel.push(`${r.contentId}: criteria use different level sets (${levelShapes.size} variants)`);
+    if (descriptorChars > RUBRIC_PAGE_CHARS) overLong.push(`${r.contentId} (${descriptorChars} chars of descriptors)`);
+  }
+  pushList("RUB-1", "error", genericDescriptors, "rubric descriptor(s) that are empty or rest on a generic evaluative adjective ('good', 'excellent', 'poor') instead of observable performance");
+  pushList("RUB-1", "warn", countDescriptors, "rubric descriptor(s) that count occurrences without naming the impact on the reader/user");
+  pushList("RUB-1", "warn", nonParallel, "rubric(s) whose criteria do not use a parallel set of performance levels");
+  pushList("RUB-1", "info", overLong, `rubric(s) longer than roughly one page (>${RUBRIC_PAGE_CHARS} chars of descriptors)`);
+
   // OBJ-4 — mastery framing: an objective that states a score/percentage target is a performance goal
   const allObjectiveTexts = domains.flatMap((d) => asArray(d?.objectives));
   const performanceGoals = allObjectiveTexts.filter((o) => PERFORMANCE_GOAL.test(o));
@@ -380,9 +474,6 @@ export function auditCourse(id: string, course: Course): Finding[] {
   }
   for (const q of questions) if (STYLE_MATCH.test(q.stem ?? "")) styleMatches.push(`question ${q.contentId}`);
 
-  const pushList = (ruleId: string, sev: Severity, list: string[], label: string) => {
-    if (list.length) findings.push({ ruleId, severity: sev, message: `${list.length} ${label}`, examples: first(list) });
-  };
   pushList("OBJ-2", "warn", outcomeVerbIssues, "learning-outcome verb issue(s)");
   pushList("STR-1", "info", longLessons, `lesson(s) exceed ${LONG_LESSON_MIN}m (segmenting candidates)`);
   pushList("STR-2", "info", noVocab, "term-dense lesson(s) with no vocabulary/prerequisite section");
