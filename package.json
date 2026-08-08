@@ -30,6 +30,7 @@
   "scripts": {
     "audit": "tsx src/audit-content.ts",
     "audit:sample": "tsx src/audit-content.ts examples/sample-course.json",
+    "audit:flawed": "tsx src/audit-content.ts examples/flawed-course.json",
     "audit:platform": "tsx src/audit-platform.ts",
     "rules": "tsx bin/learnkit.ts rules",
     "test": "vitest run",

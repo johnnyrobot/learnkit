@@ -26,6 +26,7 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 | [`src/audit-content.ts`](src/audit-content.ts) | Content auditor — checks lessons, objectives, and questions. |
 | [`src/audit-platform.ts`](src/audit-platform.ts) | Delivery-layer auditor — checks CSS/design-token accessibility. |
 | [`examples/sample-course.json`](examples/sample-course.json) | A clean "Photosynthesis Basics" course that audits with zero findings — your template. |
+| [`examples/flawed-course.json`](examples/flawed-course.json) | The counter-example — the same subject done badly, which trips every rule the content auditor implements. Run it to see what the auditor actually catches. |
 
 ## Quickstart
 
@@ -33,8 +34,11 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 git clone <your-fork> learnkit && cd learnkit
 npm install
 
-# Audit the bundled sample course (should be clean):
+# Audit the bundled sample course (should be clean, exit 0):
 npm run audit:sample
+
+# Audit the counter-example — the same course done badly (findings across every implemented rule, exit 1):
+npm run audit:flawed
 
 # Audit your own content (a bundle or a single course JSON):
 npx tsx src/audit-content.ts path/to/your-course.json
@@ -49,8 +53,20 @@ npm run rules
 npm test
 ```
 
-Every audit ends with a **coverage footer** listing the rules it could *not* check automatically
-(platform/pipeline/human-review), so it never overstates what passed.
+## What a clean audit means
+
+Two things keep "no findings" from being an empty claim:
+
+**The input is validated before any rule runs.** Every field in the content schema is optional, so an
+unrecognized shape would otherwise default to "no content" and audit perfectly clean — a green build
+gate on content the auditor never read. Instead, a document matching neither accepted shape is refused
+(exit 2), and a drifted field name, a wrong-typed collection, or a course with nothing in it reports as
+an error-severity `SCHEMA` finding. A clean audit means *read and passed*, never *could not find it*.
+
+**The coverage footer names what it did not check.** It lists the rules that need
+platform/pipeline/human review, and separately the content rules that are automatable in principle but
+not yet implemented here. The footer may only claim a rule that `examples/flawed-course.json` proves
+the auditor can actually emit — `npm test` fails if the two ever drift apart.
 
 ## As a build gate
 
@@ -69,7 +85,7 @@ for (const [id, course] of Object.entries(courses)) {
 if (errors) process.exit(1); // block the build until content is clean
 ```
 
-This is how the production certification-course platform that seeded LearnKit gated its content — e.g.
+This is how the certification-course platform that seeded LearnKit gated its content — e.g.
 "every quiz item must carry a `cognitiveLevel`" and "prefer per-choice rationales over a bare answer key."
 
 ## The evidence discipline
@@ -90,6 +106,6 @@ relicensed.
 
 ## Provenance
 
-LearnKit was extracted from a working production certification-course platform and generalized. It began as
-an audit of the *Leantime Neuroinclusive App Design Reference Guide* and was expanded via a multi-agent
-research pass. See [`docs/RESEARCH.md`](docs/RESEARCH.md).
+LearnKit was extracted from a production certification-course platform and generalized to be
+subject-neutral. It began as an audit of the *Leantime Neuroinclusive App Design Reference Guide* and
+was expanded via a multi-agent research pass. See [`docs/RESEARCH.md`](docs/RESEARCH.md).

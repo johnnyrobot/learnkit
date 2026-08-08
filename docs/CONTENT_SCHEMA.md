@@ -75,9 +75,48 @@ matched to `objectivesByDomain[].objectives` by a **normalized key**: the audito
 `\d+(\.\d+)+` run (so `"PB-1.1"`, `"1.1"`, and `"PHYS-1.1"` all normalize to `"1.1"`), falling back to
 the trimmed string for non-numeric IDs. Keep IDs consistent so alignment checks (OBJ-7, SPC-2) work.
 
+## Shape validation
+
+Every field above is optional, which means a document with the wrong shape would read as "no lessons,
+no questions, no objectives" and audit perfectly clean. To stop a clean result from ever meaning "the
+auditor could not find your content," the shape is checked before any rule runs.
+
+**Refused at load (exit 2)** — the file is not auditable at all:
+
+- anything that is not a JSON object (an array, a string, a number)
+- a `courses` value that is not an object keyed by course ID, or is empty
+- a single-course document containing none of `objectivesByDomain`, `lessons`, `questions`, `flashcards`
+
+**Reported as `SCHEMA` findings** — the file loads, but part of it would be silently ignored:
+
+| Severity | Condition |
+|---|---|
+| error | a course with no lessons, no questions and no objectives — nothing to audit |
+| error | a collection given the wrong type (`"lessons": {}`), which would read as empty |
+| error | an unrecognized field name inside `lessons`/`questions`/`flashcards`/`objectivesByDomain` — e.g. `prompt` instead of `stem`, which every rule would read as absent |
+| error | a missing required field: `contentId`/`slug`/`title` on a lesson, `contentId`/`stem` on a question |
+| warn | an unrecognized course-level field — harmless as metadata, but check for a misspelled collection key |
+
+Keys beginning with `_` are treated as comments and never flagged.
+
 ## What a clean course looks like
 
 See [`../examples/sample-course.json`](../examples/sample-course.json) — it audits with zero findings.
 Good-practice patterns it demonstrates: every objective is taught by ≥2 lessons (spacing, SPC-1), every
 question carries a `cognitiveLevel` (ASM-3) and a per-choice rationale (FBK-1), the item mix favors
 application over recall (ASM-3), and learning outcomes use single measurable verbs (OBJ-2).
+
+## What a flawed course looks like
+
+See [`../examples/flawed-course.json`](../examples/flawed-course.json) — the counter-example, and the
+proof that the auditor does something. It is schema-valid but pedagogically bad, and trips every rule
+the content auditor implements: bare-ID objectives (OBJ-1), vague and doubled outcome verbs (OBJ-2), a
+percentage target framed as an objective (OBJ-4), an objective no lesson teaches and a question that
+assesses it anyway (OBJ-7, SPC-2), a single-exposure objective (SPC-1), an over-long lesson (STR-1)
+that is term-dense with no vocabulary section, no visual and one heading (STR-2, MM-1, MM-3), a
+learning-styles claim (MM-2, a prohibited pattern), an ALL-CAPS run and a wall-of-text paragraph
+(NEU-2), emoji-only status markers (NEU-8), idioms (NEU-10), and items with no cognitive level and no
+corrective feedback (ASM-3, FBK-1).
+
+Do not "fix" it — `npm test` asserts it keeps failing, so that the sample being clean cannot be
+satisfied by an auditor that has quietly stopped checking anything.

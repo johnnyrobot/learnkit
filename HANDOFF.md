@@ -12,7 +12,7 @@ set, and auditors that check course content and delivery UIs against those rules
 
 ## Origin
 
-Extracted and generalized from a working production certification-course platform. It started as an audit of
+Extracted and generalized from a production certification-course platform. It started as an audit of
 the *Leantime Neuroinclusive App Design Reference Guide*, then expanded via a multi-agent research pass
 (6 angles → 76 claims → 31 survived 3-vote adversarial verification). All platform-specific content was
 removed; the one product-flavored example was swapped to a neutral subject (photosynthesis).

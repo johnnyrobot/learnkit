@@ -7,7 +7,10 @@
  * Input JSON is either:
  *   - a bundle:  { "courses": { "<id>": <Course>, ... } }
  *   - a single course object (audited under the id "course")
- * See ../docs/CONTENT_SCHEMA.md for the Course shape.
+ * See ../docs/CONTENT_SCHEMA.md for the Course shape. The input shape is validated before any rule
+ * runs: a document that matches neither form is refused (exit 2), and drifted field names or a
+ * course with nothing in it report as error-severity SCHEMA findings. A clean audit therefore means
+ * "content was read and passed", never "the auditor could not find the content".
  *
  * CLI:
  *   tsx src/audit-content.ts <file.json> [--json]     # audit a bundle or single course
@@ -73,13 +76,132 @@ const rulesPath = path.resolve(__dirname, "..", "docs", "RULES.json");
 const ruleset = JSON.parse(fs.readFileSync(rulesPath, "utf8")) as Ruleset;
 const ruleById = new Map(ruleset.rules.map((r) => [r.id, r]));
 const contentAuto = ruleset.rules.filter((r) => r.scope === "content" && r.automatable);
+
+/**
+ * The rules auditCourse can actually emit a finding for. RULES.json's `automatable` flag says a rule
+ * *could* be automated; this says it *is*. The two drifted apart once already — the footer claimed
+ * OBJ-4, ASM-1, RUB-1 and NEU-8 while nothing in this file emitted them — so coverage is reported
+ * from this set, never from the flag, and tests/audit.test.ts asserts the two stay reconciled.
+ */
+export const IMPLEMENTED_CONTENT_RULES = [
+  "OBJ-1", "OBJ-2", "OBJ-4", "OBJ-7", "STR-1", "STR-2", "MM-1", "MM-2", "MM-3",
+  "SPC-1", "SPC-2", "ASM-3", "FBK-1", "NEU-2", "NEU-8", "NEU-10",
+] as const;
+
+/** Content-scoped rules RULES.json marks automatable that this auditor does not yet check. */
+export const UNIMPLEMENTED_CONTENT_RULES = contentAuto
+  .filter((r) => !(IMPLEMENTED_CONTENT_RULES as readonly string[]).includes(r.id))
+  .map((r) => r.id);
+
 export { contentAuto, ruleById, ruleset };
+
+// ---------- input shape validation ----------
+/**
+ * Every field on Course is optional, so an unrecognized or drifted input shape would default to
+ * "no lessons, no questions, no objectives" and audit perfectly clean — reporting a green build
+ * gate on content the auditor never actually read. Everything below exists to make that outcome
+ * impossible: structurally impossible documents throw at load time, and misspelled field names
+ * surface as error-severity SCHEMA findings instead of as a silent absence of findings.
+ */
+const COURSE_KEYS = ["objectivesByDomain", "lessons", "questions", "flashcards"] as const;
+const LESSON_KEYS = ["contentId", "title", "slug", "order", "domainName", "estimatedMinutes", "objectiveTags", "body"];
+const QUESTION_KEYS = ["contentId", "objective", "cognitiveLevel", "stem", "choices", "correctIndex", "choiceRationales", "explanation"];
+const FLASHCARD_KEYS = ["contentId", "objective", "front", "back"];
+const DOMAIN_KEYS = ["domainName", "objectives"];
+
+const isObj = (v: unknown): v is Record<string, unknown> =>
+  typeof v === "object" && v !== null && !Array.isArray(v);
 
 /** Load a content file. Accepts a bundle ({courses:{...}}) or a single Course object. */
 export function loadCourses(file: string): Record<string, Course> {
   const doc = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (doc && typeof doc === "object" && "courses" in doc) return (doc as Bundle).courses;
+  if (!isObj(doc))
+    throw new Error(
+      `unrecognized shape: expected a JSON object — a bundle {"courses":{…}} or a single course — but got ${Array.isArray(doc) ? "an array" : typeof doc}. See docs/CONTENT_SCHEMA.md`,
+    );
+
+  if ("courses" in doc) {
+    const courses = doc.courses;
+    if (!isObj(courses)) throw new Error(`"courses" must be an object keyed by course id. See docs/CONTENT_SCHEMA.md`);
+    const notObjects = Object.entries(courses).filter(([, c]) => !isObj(c)).map(([k]) => k);
+    if (notObjects.length) throw new Error(`course(s) not shaped as objects: ${notObjects.join(", ")}. See docs/CONTENT_SCHEMA.md`);
+    if (!Object.keys(courses).length) throw new Error(`"courses" is empty — there is nothing to audit`);
+    return courses as Record<string, Course>;
+  }
+
+  // Single-course form: require at least one recognized field, so junk cannot pass as an empty course.
+  if (!COURSE_KEYS.some((k) => k in doc))
+    throw new Error(
+      `unrecognized shape: no "courses" key, and none of ${COURSE_KEYS.join(", ")}. See docs/CONTENT_SCHEMA.md`,
+    );
   return { course: doc as Course };
+}
+
+/** Structural integrity of one course. Error-severity, because these defeat every rule below. */
+function auditShape(course: Course): Finding[] {
+  const out: Finding[] = [];
+  const c = course as Record<string, unknown>;
+  const unknownTop = Object.keys(c).filter((k) => !k.startsWith("_") && !(COURSE_KEYS as readonly string[]).includes(k));
+  // Warn, not error: extra course-level metadata is harmless, and a misspelled collection key is
+  // caught for real by the empty-content check below (or by OBJ-7 losing its lessons).
+  if (unknownTop.length)
+    out.push({
+      ruleId: "SCHEMA",
+      severity: "warn",
+      message: `${unknownTop.length} unrecognized course field(s) — no rule reads them; check for a misspelled collection key`,
+      examples: first(unknownTop.map((k) => `"${k}" (recognized: ${COURSE_KEYS.join(", ")})`)),
+    });
+
+  /** A present-but-wrong-typed collection is drift too: it silently becomes []. */
+  const collection = (name: string, allowed: string[], idField: string, requiredFields: string[]): unknown[] => {
+    const v = c[name];
+    if (v === undefined) return [];
+    if (!Array.isArray(v)) {
+      out.push({ ruleId: "SCHEMA", severity: "error", message: `"${name}" must be an array, got ${isObj(v) ? "an object" : typeof v} — it is read as empty` });
+      return [];
+    }
+    const unknownFields = new Set<string>();
+    const missing: string[] = [];
+    v.forEach((item, i) => {
+      if (!isObj(item)) { missing.push(`${name}[${i}] is not an object`); return; }
+      for (const k of Object.keys(item)) if (!k.startsWith("_") && !allowed.includes(k)) unknownFields.add(k);
+      const label = typeof item[idField] === "string" ? String(item[idField]) : `${name}[${i}]`;
+      for (const f of requiredFields) {
+        const val = item[f];
+        const present = typeof val === "string" ? val.trim().length > 0 : Array.isArray(val) && val.length > 0;
+        if (!present) missing.push(`${label}: missing ${f}`);
+      }
+    });
+    if (unknownFields.size)
+      out.push({
+        ruleId: "SCHEMA",
+        severity: "error",
+        message: `${unknownFields.size} unrecognized field name(s) in "${name}" — the rules read the documented names, so these carry no content`,
+        examples: first([...unknownFields].map((k) => `${name}[].${k}`)),
+      });
+    if (missing.length)
+      out.push({ ruleId: "SCHEMA", severity: "error", message: `${missing.length} required field(s) missing in "${name}"`, examples: first(missing) });
+    return v;
+  };
+
+  const lessons = collection("lessons", LESSON_KEYS, "slug", ["contentId", "slug", "title"]);
+  const questions = collection("questions", QUESTION_KEYS, "contentId", ["contentId", "stem"]);
+  collection("flashcards", FLASHCARD_KEYS, "contentId", ["contentId"]);
+  const domains = collection("objectivesByDomain", DOMAIN_KEYS, "domainName", ["domainName", "objectives"]);
+  const objectiveCount = domains.reduce<number>(
+    (n, d) => n + (isObj(d) && Array.isArray(d.objectives) ? d.objectives.length : 0),
+    0,
+  );
+
+  // The vacuous pass: nothing to audit is a finding, never a clean bill of health.
+  if (!lessons.length && !questions.length && !objectiveCount)
+    out.push({
+      ruleId: "SCHEMA",
+      severity: "error",
+      message: `no lessons, questions, or objectives — nothing was audited, so a clean result here would be meaningless`,
+    });
+
+  return out;
 }
 
 // ---------- helpers ----------
@@ -94,16 +216,26 @@ const RECALL_LEVELS = new Set(["RECALL", "REMEMBER", "KNOWLEDGE"]);
 const VAGUE_VERBS = ["understand", "know", "learn", "be aware", "appreciate", "familiarize", "familiarise", "grasp", "comprehend", "realize", "realise", "gain knowledge"];
 const IDIOMS = ["piece of cake", "hit the ground running", "low-hanging fruit", "move the needle", "bite the bullet", "on the same page", "think outside the box", "get up to speed", "boils down to", "in a nutshell", "ballpark", "under the hood", "rule of thumb", "cut corners"];
 const STYLE_MATCH = /\b(visual|auditory|kinesthetic|kinaesthetic|tactile)\s+learner(s)?\b|\blearning styles?\b/i;
+/** OBJ-4: score/percentage targets turn a mastery objective into a performance goal. */
+const PERFORMANCE_GOAL = /\d{1,3}\s*(%|percent\b)|\bscor(e|ing)\b|\bat least \d+\s*(points?|marks?|questions?)\b|\bpass(ing)? (mark|rate|score)\b|\btop \d+\s*%/i;
+/** NEU-8: glyphs commonly used as a status indicator with no text equivalent. */
+const STATUS_EMOJI =
+  /[✅❌✓✔✖✗⚠⭕\u{1F534}\u{1F535}\u{1F6AB}\u{1F7E0}\u{1F7E1}\u{1F7E2}]/u;
 
 const first = <T,>(arr: T[], n = 5): T[] => arr.slice(0, n);
+/** Tolerate a missing or wrong-typed collection; auditShape has already reported it as a finding. */
+const asArray = <T,>(v: T[] | undefined): T[] => (Array.isArray(v) ? v : []);
 
 // ---------- the audit ----------
 export function auditCourse(id: string, course: Course): Finding[] {
-  const findings: Finding[] = [];
-  const lessons = course.lessons ?? [];
-  const questions = course.questions ?? [];
+  // auditShape has already reported any wrong-typed collection; coerce so a bad input yields
+  // findings rather than a TypeError halfway through the run.
+  const findings: Finding[] = auditShape(course);
+  const lessons = asArray(course.lessons);
+  const questions = asArray(course.questions);
+  const domains = asArray(course.objectivesByDomain);
   const objectiveIds = new Set(
-    (course.objectivesByDomain ?? []).flatMap((d) => d.objectives.map((o) => normObj(o))),
+    domains.flatMap((d) => asArray(d?.objectives).map((o) => normObj(o))),
   );
 
   const lessonsByObjective = new Map<string, Lesson[]>();
@@ -170,8 +302,32 @@ export function auditCourse(id: string, course: Course): Finding[] {
   if (explanationOnly.length)
     findings.push({ ruleId: "FBK-1", severity: "warn", message: `${explanationOnly.length}/${questions.length} item(s) have only a question-level explanation, not per-choice rationales — per-choice feedback is more informational (tells the learner why each distractor is wrong)`, examples: first(explanationOnly.map((q) => q.contentId)) });
 
+  // OBJ-4 — mastery framing: an objective that states a score/percentage target is a performance goal
+  const allObjectiveTexts = domains.flatMap((d) => asArray(d?.objectives));
+  const performanceGoals = allObjectiveTexts.filter((o) => PERFORMANCE_GOAL.test(o));
+  if (performanceGoals.length)
+    findings.push({ ruleId: "OBJ-4", severity: "warn", message: `${performanceGoals.length} objective(s) state a score/percentage target — that is a performance goal; frame the objective around what the learner can do`, examples: first(performanceGoals) });
+
+  // NEU-8 — status conveyed by emoji/color alone, with no text equivalent
+  const emojiOnlyStatus: string[] = [];
+  for (const l of lessons) {
+    for (const line of (l.body ?? "").split("\n")) {
+      // Table cells and list items are where status markers live; a cell of pure symbols has no text equivalent.
+      const cells = /^\s*\|/.test(line) ? line.split("|").slice(1, -1) : /^\s*[-*]\s+/.test(line) ? [line.replace(/^\s*[-*]\s+/, "")] : [];
+      for (const cell of cells) {
+        const t = cell.trim();
+        if (t && STATUS_EMOJI.test(t) && !/[A-Za-z0-9]/.test(t)) emojiOnlyStatus.push(`${l.slug}: "${t}"`);
+      }
+    }
+  }
+  if (emojiOnlyStatus.length)
+    findings.push({ ruleId: "NEU-8", severity: "error", message: `${emojiOnlyStatus.length} emoji-only status marker(s) — status must carry a text equivalent, not colour/glyph alone`, examples: first(emojiOnlyStatus) });
+
   // OBJ-1 — objectives stored as bare ids without Bloom cells
-  const bareObjectives = (course.objectivesByDomain ?? []).some((d) => d.objectives.every((o) => /^\d+(?:\.\d+)+$/.test(o.trim())));
+  const bareObjectives = domains.some((d) => {
+    const objs = asArray(d?.objectives);
+    return objs.length > 0 && objs.every((o) => /^\d+(?:\.\d+)+$/.test(String(o).trim()));
+  });
   if (bareObjectives)
     findings.push({ ruleId: "OBJ-1", severity: "warn", message: `objectives are stored as bare IDs (e.g. "1.1") with no objective text or two-dimensional Bloom cell — two-dimensional labeling (process × knowledge type) cannot be verified; recommend enriching the objective model` });
 
@@ -245,7 +401,7 @@ function runCli(): void {
     report[id] = auditCourse(id, courses[id]);
   }
 
-  const notAudited = ruleset.rules.filter((r) => !(r.scope === "content" && r.automatable));
+  const notAudited = ruleset.rules.filter((r) => !(IMPLEMENTED_CONTENT_RULES as readonly string[]).includes(r.id));
   if (asJson) {
     console.log(JSON.stringify({ file, report, coverage: { audited: contentAuto.map((r) => r.id), notAuditedHere: notAudited.map((r) => r.id) } }, null, 2));
     return;
@@ -265,8 +421,11 @@ function runCli(): void {
     }
   }
   console.log(`\n──── coverage ────`);
-  console.log(`  audited (content + automatable): ${contentAuto.map((r) => r.id).join(", ")}`);
-  console.log(`  NOT audited here (needs platform/pipeline/human review): ${notAudited.map((r) => r.id).join(", ")}`);
+  console.log(`  input shape: validated — unreadable shapes are refused, and misspelled fields or empty courses report as SCHEMA errors rather than passing silently`);
+  console.log(`  audited (checked by this auditor): ${IMPLEMENTED_CONTENT_RULES.join(", ")}`);
+  if (UNIMPLEMENTED_CONTENT_RULES.length)
+    console.log(`  content-scoped but NOT yet implemented here: ${UNIMPLEMENTED_CONTENT_RULES.join(", ")}`);
+  console.log(`  NOT audited here (needs platform/pipeline/human review): ${notAudited.filter((r) => !UNIMPLEMENTED_CONTENT_RULES.includes(r.id)).map((r) => r.id).join(", ")}`);
   console.log(`\n  ${totalErrors} error-severity finding(s) across ${ids.length} course(s).`);
   process.exitCode = totalErrors > 0 ? 1 : 0;
 }
