@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ["20", "22"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # The importable API is covered above. These run the CLIs themselves, so a broken entry point
+      # or a wrong exit code cannot pass — the exit code is what a build gate actually consumes.
+      - name: CLI — sample course must audit clean (exit 0)
+        run: npm run audit:sample
+
+      - name: CLI — counter-example must still report errors (exit 1)
+        run: |
+          if npm run audit:flawed > /dev/null 2>&1; then
+            echo "::error::examples/flawed-course.json exited 0 — the auditor stopped catching its own counter-example"
+            exit 1
+          fi
+
+      - name: CLI — unreadable input must be refused (exit 2)
+        run: |
+          echo '{"totally":"wrong"}' > /tmp/junk.json
+          # `run:` uses `bash -e`, so capture the code instead of letting the non-zero exit abort the step.
+          code=0
+          npx tsx src/audit-content.ts /tmp/junk.json > /dev/null 2>&1 || code=$?
+          if [ "$code" -ne 2 ]; then
+            echo "::error::expected exit 2 for an unrecognized shape, got $code"
+            exit 1
+          fi
+
+      - name: CLI — rule set lists
+        run: npm run rules
+
+      - name: Build
+        run: npm run build
+
+      # The package is only publishable if a consumer can actually import it. Pack it, install it into
+      # a scratch project, and use it exactly as the README's build-gate snippet does.
+      - name: Package is consumable
+        run: |
+          npm pack --pack-destination /tmp
+          mkdir -p /tmp/consumer && cd /tmp/consumer
+          npm init -y > /dev/null
+          npm pkg set type=module > /dev/null
+          npm install /tmp/learnkit-*.tgz
+          cat > gate.mjs <<'EOF'
+          import { auditCourse, loadCourses, ruleset } from "learnkit";
+          if (!ruleset.rules.length) { console.error("ruleset failed to load"); process.exit(1); }
+          const courses = loadCourses(process.argv[2]);
+          const errors = Object.entries(courses)
+            .flatMap(([id, c]) => auditCourse(id, c))
+            .filter((f) => f.severity === "error");
+          console.log(`${ruleset.rules.length} rules, ${errors.length} errors`);
+          process.exit(errors.length ? 1 : 0);
+          EOF
+          node gate.mjs "$GITHUB_WORKSPACE/examples/sample-course.json"
+          if node gate.mjs "$GITHUB_WORKSPACE/examples/flawed-course.json" > /dev/null 2>&1; then
+            echo "::error::installed package reported the counter-example as clean"
+            exit 1
+          fi
+          npx learnkit rules > /dev/null

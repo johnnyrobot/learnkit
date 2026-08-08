@@ -1,6 +1,6 @@
 # AGENTS.md
 
-LearnKit is a neuroinclusive-coursework kit — an evidence-based instructional-design specification, a machine-readable rule set (`docs/RULES.json`), and two CLI auditors that check course content and delivery-layer CSS against those rules. It is meant to be embedded in content pipelines (LLM generators, LMS/authoring tools) as a build gate. **Stack:** TypeScript, ES modules, executed with `tsx` (no compile step); tests via Vitest. Zero runtime dependencies.
+LearnKit is a neuroinclusive-coursework kit — an evidence-based instructional-design specification, a machine-readable rule set (`docs/RULES.json`), and two CLI auditors that check course content and delivery-layer CSS against those rules. It is meant to be embedded in content pipelines (LLM generators, LMS/authoring tools) as a build gate. **Stack:** TypeScript, ES modules, run with `tsx` during development; tests via Vitest. Zero runtime dependencies. `npm run build` is a plain `tsc` emit to `dist/`, needed only to publish.
 
 ## Setup
 
@@ -8,11 +8,11 @@ LearnKit is a neuroinclusive-coursework kit — an evidence-based instructional-
 npm install
 ```
 
-That installs the dev toolchain (`tsx`, `typescript`, `vitest`, `@types/node`). There is nothing to build — the CLIs and library run straight from TypeScript source via `tsx`.
+That installs the dev toolchain (`tsx`, `typescript`, `vitest`, `@types/node`). You do not need to build to develop — the CLIs and library run straight from TypeScript source via `tsx`. Run `npm run build` only when checking what gets published.
 
 ## Build & Run
 
-No build step. Run the auditors directly:
+Run the auditors directly, no build required:
 
 ```bash
 npm run audit                                  # content auditor (pass a path, or a bundle)
@@ -52,7 +52,7 @@ Tests live in `tests/`. Two paired fixtures carry the core guarantee: `examples/
 
 ## Commit & PR Conventions
 
-Git repo (`main`, origin `github.com/johnnyrobot/learnkit`). Branch off `main`; ensure `npm test` + `npm run typecheck` pass before opening a PR. Nice-to-haves on the backlog: a deliberately-flawed counter-example course, `CONTRIBUTING.md`, and a CI workflow running audit + tests on push. Commit or push only when the user asks.
+Git repo (`main`, origin `github.com/johnnyrobot/learnkit`). Branch off `main`; ensure `npm test` + `npm run typecheck` pass before opening a PR. CI (`.github/workflows/ci.yml`) runs typecheck, tests, both fixtures, the CLI exit codes, the build, and an install-the-tarball check on Node 20 and 22. See `CONTRIBUTING.md`. Commit or push only when the user asks.
 
 ## Security & Data
 

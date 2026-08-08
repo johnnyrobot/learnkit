@@ -53,7 +53,10 @@ npm run rules            # lists 57 rules + 7 prohibited patterns
 
 ## Open items
 
-- Repo is **private**. Make public later:
+- Repo is **private**. Make public when ready:
   `gh repo edit johnnyrobot/learnkit --visibility public --accept-visibility-change-consequences`.
-- Nice-to-haves: a deliberately-flawed counter-example course (to demo the auditor catching problems),
-  `CONTRIBUTING.md`, and a GitHub Actions workflow running audit + tests on push.
+- Not yet published to npm. The package builds and installs correctly (CI proves it by installing the
+  tarball each run); `npm publish` is the only remaining step.
+- `ASM-1` and `RUB-1` are content-scoped and automatable in principle, but need schema fields the kit
+  does not define yet (formative/summative labels; rubrics). They are listed as not implemented in the
+  coverage footer rather than silently claimed.

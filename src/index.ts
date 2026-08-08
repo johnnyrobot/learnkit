@@ -19,4 +19,4 @@ export {
   type Course,
   type Finding,
   type Severity,
-} from "./audit-content";
+} from "./audit-content.js";

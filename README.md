@@ -30,8 +30,18 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 
 ## Quickstart
 
+Use it as a dependency:
+
 ```bash
-git clone <your-fork> learnkit && cd learnkit
+npm install learnkit
+npx learnkit audit path/to/your-course.json
+npx learnkit rules
+```
+
+Or work on the rules themselves:
+
+```bash
+git clone https://github.com/johnnyrobot/learnkit.git && cd learnkit
 npm install
 
 # Audit the bundled sample course (should be clean, exit 0):
@@ -73,7 +83,7 @@ the auditor can actually emit — `npm test` fails if the two ever drift apart.
 Fail your content build when any finding is an error:
 
 ```ts
-import { auditCourse, loadCourses } from "learnkit"; // or "./src/audit-content"
+import { auditCourse, loadCourses } from "learnkit";
 
 const courses = loadCourses("build/course-bundle.json");
 let errors = 0;

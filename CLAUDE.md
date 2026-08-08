@@ -28,6 +28,7 @@ npm run audit:sample     # audit the bundled sample course — expect 0 findings
 npm run audit:flawed     # audit the counter-example — expect findings on every implemented rule, exit 1
 npm test                 # vitest run — guards the sample stays clean
 npm run typecheck        # tsc --noEmit
+npm run build            # tsc emit to dist/ — only needed to publish, not to develop
 npm run rules            # list the rule set (57 rules + 7 prohibited patterns)
 npx tsx src/audit-content.ts path/to/your-course.json   # audit your own content
 npx tsx src/audit-platform.ts --dir path/to/styles      # audit a delivery layer's CSS/tokens
@@ -46,5 +47,7 @@ npx tsx src/audit-platform.ts --dir path/to/styles      # audit a delivery layer
 
 - The two example courses are **paired regression fixtures**. If a rule change makes `examples/sample-course.json` report findings, either the sample or the rule is wrong. If it makes `examples/flawed-course.json` stop reporting, the rule silently stopped working. Don't "fix" the flawed course — its problems are the fixture. `npm test` catches both directions.
 - LearnKit hard-refuses plausible-sounding myths (learning styles, dyslexia-specific "treatment" fonts, single high-contrast-only themes, "faster feedback always wins"). Don't add rules that reintroduce them — see `docs/SOURCE_OF_TRUTH.md` §1–§2.
-- No compile/bundle step and no runtime deps — everything runs through `tsx`. Keep it that way unless the user asks to add a build.
+- **No runtime dependencies and no bundler.** Development runs straight through `tsx` with no build; `npm run build` is a plain `tsc` emit to `dist/`, needed only so the package is installable from npm. Don't add a bundler or a production dep without being asked.
+- `docs/RULES.json` is read **at runtime**, and sits at a different depth depending on how the module runs (`src/` in the repo, `dist/src/` from an install). `resolveRulesPath()` in `src/audit-content.ts` handles both — keep `docs` in package.json `files`.
+- `bin/learnkit.ts` imports its subcommands rather than spawning `npx tsx`, because an installed package has no tsx to spawn. It needs `export {}` to stay a module (it has only dynamic imports) and its shebang is `#!/usr/bin/env node`, not tsx.
 - The kit was extracted and generalized from a production cert-course platform — keep it subject-neutral: no product-specific content, and do not name the source platform or the organization it belonged to.

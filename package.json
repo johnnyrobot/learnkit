@@ -13,13 +13,28 @@
     "wcag",
     "education"
   ],
-  "license": "MIT",
+  "license": "(MIT AND CC-BY-4.0)",
+  "author": "johnnyrobot",
+  "homepage": "https://github.com/johnnyrobot/learnkit#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/johnnyrobot/learnkit.git" },
+  "bugs": { "url": "https://github.com/johnnyrobot/learnkit/issues" },
+  "engines": { "node": ">=20" },
   "type": "module",
-  "main": "src/index.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./rules.json": "./docs/RULES.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
-    "learnkit": "bin/learnkit.ts"
+    "learnkit": "./dist/bin/learnkit.js"
   },
   "files": [
+    "dist",
     "src",
     "bin",
     "docs",
@@ -34,12 +49,14 @@
     "audit:platform": "tsx src/audit-platform.ts",
     "rules": "tsx bin/learnkit.ts rules",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
-    "vitest": "^2.1.0"
+    "vitest": "^4.1.10"
   }
 }

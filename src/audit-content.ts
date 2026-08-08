@@ -72,7 +72,20 @@ export type Severity = "error" | "warn" | "info";
 export type Finding = { ruleId: string; severity: Severity; message: string; examples?: string[] };
 
 // ---------- load ruleset ----------
-const rulesPath = path.resolve(__dirname, "..", "docs", "RULES.json");
+/**
+ * docs/ ships with the package and is read at runtime, but it sits at a different depth depending on
+ * how this module is being run: `src/` in the repo, `dist/src/` from an install.
+ */
+function resolveRulesPath(): string {
+  const candidates = [
+    path.resolve(__dirname, "..", "docs", "RULES.json"), // repo:  src/  -> ../docs
+    path.resolve(__dirname, "..", "..", "docs", "RULES.json"), // built: dist/src/ -> ../../docs
+  ];
+  const found = candidates.find((c) => fs.existsSync(c));
+  if (!found) throw new Error(`cannot locate docs/RULES.json (looked in: ${candidates.join(", ")})`);
+  return found;
+}
+const rulesPath = resolveRulesPath();
 const ruleset = JSON.parse(fs.readFileSync(rulesPath, "utf8")) as Ruleset;
 const ruleById = new Map(ruleset.rules.map((r) => [r.id, r]));
 const contentAuto = ruleset.rules.filter((r) => r.scope === "content" && r.automatable);
@@ -383,7 +396,7 @@ export function auditCourse(id: string, course: Course): Finding[] {
 }
 
 // ---------- CLI ----------
-function runCli(): void {
+export function runCli(): void {
   const args = process.argv.slice(2);
   const asJson = args.includes("--json");
   const positional = args.filter((a) => !a.startsWith("--"));
