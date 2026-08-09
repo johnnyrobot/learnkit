@@ -30,13 +30,15 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 
 ## Quickstart
 
-Use it as a dependency:
+Use it as a dependency — installed straight from GitHub, no npm registry involved:
 
 ```bash
-npm install @johnnyrobot/learnkit
+npm install github:johnnyrobot/learnkit
 npx learnkit audit path/to/your-course.json
 npx learnkit rules
 ```
+
+Pin to a tag or commit for reproducible builds: `github:johnnyrobot/learnkit#v1.0.0`.
 
 Or work on the rules themselves:
 

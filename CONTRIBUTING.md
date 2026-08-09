@@ -11,7 +11,7 @@ npm install
 npm test
 ```
 
-Node 20 or later. Development needs no build — everything runs straight through `tsx`. `npm run build` exists only to produce the publishable `dist/`.
+Node 20 or later. Development needs no build — everything runs straight through `tsx`. `npm install` does run `prepare`, which builds `dist/` once; that exists so `npm install github:johnnyrobot/learnkit` produces a working package for consumers, and you can ignore it while working on the rules.
 
 ## Before you open a PR
 
