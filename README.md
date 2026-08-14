@@ -110,11 +110,11 @@ sound plausible but contradict the evidence — e.g. matching content to "learni
 dyslexia-specific fonts as a treatment, a single high-contrast-only theme, or "faster feedback always
 wins." See [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md) §1–§2.
 
-**What that discipline does not cover.** LearnKit is an instructional-design tool, not a clinical one.
-Its rules are graded against published research, but the kit itself has not been clinically evaluated,
-and a clean audit is not a claim about learning outcomes or about accessibility conformance for any
-individual learner. It diagnoses nothing, and it is not a substitute for accessibility testing with
-real users — including neurodivergent and disabled learners.
+> **Disclaimer.** *LearnKit is an instructional-design tool, not a clinical one. Its rules are graded
+> against published research, but the kit itself has not been clinically evaluated, and a clean audit is
+> not a claim about learning outcomes or about accessibility conformance for any individual learner. It
+> diagnoses nothing, and it is not a substitute for accessibility testing with real users — including
+> neurodivergent and disabled learners.*
 
 ## License
 
