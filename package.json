@@ -15,25 +15,33 @@
   ],
   "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    "import": "./dist/src/index.js",
+    "types": "./dist/src/index.d.ts"
+  },
   "bin": {
-    "learnkit": "bin/learnkit.ts"
+    "learnkit": "dist/bin/learnkit.js"
   },
   "files": [
-    "src",
-    "bin",
+    "dist",
     "docs",
     "examples",
     "LICENSE",
     "LICENSE-docs"
   ],
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "audit": "tsx src/audit-content.ts",
     "audit:sample": "tsx src/audit-content.ts examples/sample-course.json",
     "audit:platform": "tsx src/audit-platform.ts",
     "rules": "tsx bin/learnkit.ts rules",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

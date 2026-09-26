@@ -41,6 +41,7 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 | [`src/audit-content.ts`](src/audit-content.ts) | Content auditor — checks lessons, objectives, and questions. |
 | [`src/audit-platform.ts`](src/audit-platform.ts) | Delivery-layer auditor — checks CSS/design-token accessibility. |
 | [`examples/sample-course.json`](examples/sample-course.json) | A clean "Photosynthesis Basics" course that audits with zero findings — your template. |
+| [`examples/flawed-counter-example-course.json`](examples/flawed-counter-example-course.json) | A deliberately flawed course used to demonstrate LearnKit findings and error coverage. |
 
 ## Quickstart
 
@@ -50,6 +51,9 @@ npm install
 
 # Audit the bundled sample course (should be clean):
 npm run audit:sample
+
+# See expected failures in the flawed example:
+npm run audit -- examples/flawed-counter-example-course.json --json
 
 # Audit your own content (a bundle or a single course JSON):
 npx tsx src/audit-content.ts path/to/your-course.json

@@ -1,0 +1,77 @@
+{
+  "/Users/johnnyrobot/code/learnkit/bin/learnkit.ts": {
+    "mtime": 1784094031.4418952,
+    "ast_hash": "fb4f1d00f5493829bbbea831a7cd0fb6",
+    "semantic_hash": "fb4f1d00f5493829bbbea831a7cd0fb6"
+  },
+  "/Users/johnnyrobot/code/learnkit/docs/RULES.json": {
+    "mtime": 1784093670.889234,
+    "ast_hash": "e1056ff359e174881c5a988c34533b48",
+    "semantic_hash": "e1056ff359e174881c5a988c34533b48"
+  },
+  "/Users/johnnyrobot/code/learnkit/examples/sample-course.json": {
+    "mtime": 1784093761.104004,
+    "ast_hash": "33da653b6e315a7cfb625e620ec4118c",
+    "semantic_hash": "33da653b6e315a7cfb625e620ec4118c"
+  },
+  "/Users/johnnyrobot/code/learnkit/package.json": {
+    "mtime": 1784094062.976252,
+    "ast_hash": "0e838de1ff0e8821327d6bbd2a7f8495",
+    "semantic_hash": "0e838de1ff0e8821327d6bbd2a7f8495"
+  },
+  "/Users/johnnyrobot/code/learnkit/src/audit-content.ts": {
+    "mtime": 1784094024.0725596,
+    "ast_hash": "3df15496a4b0394841b4a248eaacf713",
+    "semantic_hash": "3df15496a4b0394841b4a248eaacf713"
+  },
+  "/Users/johnnyrobot/code/learnkit/src/audit-platform.ts": {
+    "mtime": 1784093594.4960008,
+    "ast_hash": "6ead6825dc391e9e239e36bc0b28f270",
+    "semantic_hash": "6ead6825dc391e9e239e36bc0b28f270"
+  },
+  "/Users/johnnyrobot/code/learnkit/src/index.ts": {
+    "mtime": 1784093604.843587,
+    "ast_hash": "deea14d0cececb7c60589b70646717e2",
+    "semantic_hash": "deea14d0cececb7c60589b70646717e2"
+  },
+  "/Users/johnnyrobot/code/learnkit/tests/audit.test.ts": {
+    "mtime": 1784093798.8975313,
+    "ast_hash": "7a17c3ff7099d7452f2beab35bd98995",
+    "semantic_hash": "7a17c3ff7099d7452f2beab35bd98995"
+  },
+  "/Users/johnnyrobot/code/learnkit/tsconfig.json": {
+    "mtime": 1784093776.2599945,
+    "ast_hash": "7c599a9e6eed80825abc196873ea3843",
+    "semantic_hash": "7c599a9e6eed80825abc196873ea3843"
+  },
+  "/Users/johnnyrobot/code/learnkit/vitest.config.ts": {
+    "mtime": 1784093781.071782,
+    "ast_hash": "96cf4978c5284a56652533a7cd747c77",
+    "semantic_hash": "96cf4978c5284a56652533a7cd747c77"
+  },
+  "/Users/johnnyrobot/code/learnkit/HANDOFF.md": {
+    "mtime": 1784098612.6606328,
+    "ast_hash": "3e22e0699eb6f16fb9e40d8145a423ff",
+    "semantic_hash": "3e22e0699eb6f16fb9e40d8145a423ff"
+  },
+  "/Users/johnnyrobot/code/learnkit/README.md": {
+    "mtime": 1784309364.514365,
+    "ast_hash": "4bb643671e20626158819d93f244ef91",
+    "semantic_hash": "4bb643671e20626158819d93f244ef91"
+  },
+  "/Users/johnnyrobot/code/learnkit/docs/CONTENT_SCHEMA.md": {
+    "mtime": 1784093855.3089967,
+    "ast_hash": "f4f482ebc2a5befa20b96a76b31368b9",
+    "semantic_hash": "f4f482ebc2a5befa20b96a76b31368b9"
+  },
+  "/Users/johnnyrobot/code/learnkit/docs/RESEARCH.md": {
+    "mtime": 1784093893.2985888,
+    "ast_hash": "b82d9c27d94c7ab9a3b0eb936dd101de",
+    "semantic_hash": "b82d9c27d94c7ab9a3b0eb936dd101de"
+  },
+  "/Users/johnnyrobot/code/learnkit/docs/SOURCE_OF_TRUTH.md": {
+    "mtime": 1784093953.2067964,
+    "ast_hash": "78bcbb4ea633c39914344d4c88ac091b",
+    "semantic_hash": "78bcbb4ea633c39914344d4c88ac091b"
+  }
+}

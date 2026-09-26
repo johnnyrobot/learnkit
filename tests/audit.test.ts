@@ -23,3 +23,23 @@ describe("sample course", () => {
     });
   }
 });
+
+describe("counter-example course", () => {
+  const courses = loadCourses(new URL("../examples/flawed-counter-example-course.json", import.meta.url).pathname);
+
+  for (const [id, course] of Object.entries(courses)) {
+    const findings = auditCourse(id, course);
+    const ids = new Set(findings.map((f) => f.ruleId));
+
+    it(`${id}: intentionally produces errors`, () => {
+      expect(findings.some((f) => f.severity === "error")).toBe(true);
+    });
+
+    it(`${id}: demonstrates known expected violations`, () => {
+      expect(ids.has("MM-2")).toBe(true);
+      expect(ids.has("SPC-2")).toBe(true);
+      expect(ids.has("OBJ-7")).toBe(true);
+      expect(ids.has("FBK-1")).toBe(true);
+    });
+  }
+});

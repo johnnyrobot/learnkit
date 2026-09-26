@@ -1,0 +1,2929 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "research_synthesis_pipeline",
+        "label": "Research Synthesis and Verification Pipeline",
+        "nodes": [
+          "docs_research_fan_out_research",
+          "docs_research_adversarial_verification",
+          "docs_research_verification_outcome",
+          "docs_source_of_truth_instructional_design_specification"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/RESEARCH.md"
+      },
+      {
+        "id": "research_bibliography_domains",
+        "label": "Research Bibliography Domains",
+        "nodes": [
+          "docs_source_of_truth_learning_science_sources",
+          "docs_source_of_truth_practice_feedback_sources",
+          "docs_source_of_truth_neuroinclusion_sources",
+          "docs_source_of_truth_motivation_sources",
+          "docs_source_of_truth_authoring_sources"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/SOURCE_OF_TRUTH.md"
+      },
+      {
+        "id": "learnkit_enforcement_architecture",
+        "label": "LearnKit Enforcement Architecture",
+        "nodes": [
+          "docs_source_of_truth_instructional_design_specification",
+          "docs_rules_ruleset",
+          "docs_content_schema_content_schema",
+          "src_audit_content_auditcourse",
+          "src_audit_platform_platform_audit"
+        ],
+        "relation": "implement",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "docs/SOURCE_OF_TRUTH.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "learnkit.ts",
+      "file_type": "code",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bin_learnkit",
+      "community": 8,
+      "norm_label": "learnkit.ts"
+    },
+    {
+      "label": "here",
+      "file_type": "code",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "bin_learnkit_here",
+      "community": 8,
+      "norm_label": "here"
+    },
+    {
+      "label": "[cmd, ...rest]",
+      "file_type": "code",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "bin_learnkit_cmd_rest",
+      "community": 8,
+      "norm_label": "[cmd, ...rest]"
+    },
+    {
+      "label": "runScript()",
+      "file_type": "code",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "bin_learnkit_runscript",
+      "community": 8,
+      "norm_label": "runscript()"
+    },
+    {
+      "label": "RULES.json",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_rules",
+      "community": 1,
+      "norm_label": "rules.json"
+    },
+    {
+      "label": "$schema",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "docs_rules_schema",
+      "community": 1,
+      "norm_label": "$schema"
+    },
+    {
+      "label": "meta",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "docs_rules_meta",
+      "community": 1,
+      "norm_label": "meta"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "docs_rules_meta_name",
+      "community": 1,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "docs_rules_meta_version",
+      "community": 1,
+      "norm_label": "version"
+    },
+    {
+      "label": "derivedFrom",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "docs_rules_meta_derivedfrom",
+      "community": 1,
+      "norm_label": "derivedfrom"
+    },
+    {
+      "label": "generated",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_rules_meta_generated",
+      "community": 1,
+      "norm_label": "generated"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "docs_rules_meta_description",
+      "community": 1,
+      "norm_label": "description"
+    },
+    {
+      "label": "tierLegend",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "docs_rules_meta_tierlegend",
+      "community": 1,
+      "norm_label": "tierlegend"
+    },
+    {
+      "label": "strong",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "docs_rules_tierlegend_strong",
+      "community": 1,
+      "norm_label": "strong"
+    },
+    {
+      "label": "moderate",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "docs_rules_tierlegend_moderate",
+      "community": 1,
+      "norm_label": "moderate"
+    },
+    {
+      "label": "contested",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "docs_rules_tierlegend_contested",
+      "community": 1,
+      "norm_label": "contested"
+    },
+    {
+      "label": "inference",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "docs_rules_tierlegend_inference",
+      "community": 1,
+      "norm_label": "inference"
+    },
+    {
+      "label": "scopeLegend",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "docs_rules_meta_scopelegend",
+      "community": 1,
+      "norm_label": "scopelegend"
+    },
+    {
+      "label": "content",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "docs_rules_scopelegend_content",
+      "community": 1,
+      "norm_label": "content"
+    },
+    {
+      "label": "platform",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "docs_rules_scopelegend_platform",
+      "community": 1,
+      "norm_label": "platform"
+    },
+    {
+      "label": "pipeline",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "docs_rules_scopelegend_pipeline",
+      "community": 1,
+      "norm_label": "pipeline"
+    },
+    {
+      "label": "checkTypeLegend",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_rules_meta_checktypelegend",
+      "community": 1,
+      "norm_label": "checktypelegend"
+    },
+    {
+      "label": "auto",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "docs_rules_checktypelegend_auto",
+      "community": 1,
+      "norm_label": "auto"
+    },
+    {
+      "label": "llm",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "docs_rules_checktypelegend_llm",
+      "community": 1,
+      "norm_label": "llm"
+    },
+    {
+      "label": "human",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "docs_rules_checktypelegend_human",
+      "community": 1,
+      "norm_label": "human"
+    },
+    {
+      "label": "prohibited",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "docs_rules_prohibited",
+      "community": 1,
+      "norm_label": "prohibited"
+    },
+    {
+      "label": "rules",
+      "file_type": "code",
+      "source_file": "docs/RULES.json",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "docs_rules_rules",
+      "community": 1,
+      "norm_label": "rules"
+    },
+    {
+      "label": "sample-course.json",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "examples_sample_course",
+      "community": 6,
+      "norm_label": "sample-course.json"
+    },
+    {
+      "label": "_comment",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "examples_sample_course_comment",
+      "community": 6,
+      "norm_label": "_comment"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "examples_sample_course_version",
+      "community": 6,
+      "norm_label": "version"
+    },
+    {
+      "label": "courses",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "examples_sample_course_courses",
+      "community": 6,
+      "norm_label": "courses"
+    },
+    {
+      "label": "photosynthesis-basics",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "examples_sample_course_courses_photosynthesis_basics",
+      "community": 6,
+      "norm_label": "photosynthesis-basics"
+    },
+    {
+      "label": "objectivesByDomain",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "examples_sample_course_photosynthesis_basics_objectivesbydomain",
+      "community": 6,
+      "norm_label": "objectivesbydomain"
+    },
+    {
+      "label": "lessons",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "examples_sample_course_photosynthesis_basics_lessons",
+      "community": 6,
+      "norm_label": "lessons"
+    },
+    {
+      "label": "questions",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "examples_sample_course_photosynthesis_basics_questions",
+      "community": 6,
+      "norm_label": "questions"
+    },
+    {
+      "label": "flashcards",
+      "file_type": "code",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L165",
+      "_origin": "ast",
+      "id": "examples_sample_course_photosynthesis_basics_flashcards",
+      "community": 6,
+      "norm_label": "flashcards"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "package",
+      "community": 3,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "package_name",
+      "community": 3,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "package_version",
+      "community": 3,
+      "norm_label": "version"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "package_description",
+      "community": 3,
+      "norm_label": "description"
+    },
+    {
+      "label": "keywords",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "package_keywords",
+      "community": 3,
+      "norm_label": "keywords"
+    },
+    {
+      "label": "license",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "package_license",
+      "community": 3,
+      "norm_label": "license"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "package_type",
+      "community": 3,
+      "norm_label": "type"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "package_main",
+      "community": 3,
+      "norm_label": "main"
+    },
+    {
+      "label": "bin",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "package_bin",
+      "community": 3,
+      "norm_label": "bin"
+    },
+    {
+      "label": "learnkit",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "package_bin_learnkit",
+      "community": 3,
+      "norm_label": "learnkit"
+    },
+    {
+      "label": "files",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "package_files",
+      "community": 3,
+      "norm_label": "files"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "package_scripts",
+      "community": 7,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "audit",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "package_scripts_audit",
+      "community": 7,
+      "norm_label": "audit"
+    },
+    {
+      "label": "audit:sample",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "package_scripts_audit_sample",
+      "community": 7,
+      "norm_label": "audit:sample"
+    },
+    {
+      "label": "audit:platform",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "package_scripts_audit_platform",
+      "community": 7,
+      "norm_label": "audit:platform"
+    },
+    {
+      "label": "rules",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "package_scripts_rules",
+      "community": 7,
+      "norm_label": "rules"
+    },
+    {
+      "label": "test",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "package_scripts_test",
+      "community": 7,
+      "norm_label": "test"
+    },
+    {
+      "label": "typecheck",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "package_scripts_typecheck",
+      "community": 7,
+      "norm_label": "typecheck"
+    },
+    {
+      "label": "devDependencies",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "package_devdependencies",
+      "community": 3,
+      "norm_label": "devdependencies"
+    },
+    {
+      "label": "@types/node",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "package_devdependencies_types_node",
+      "community": 3,
+      "norm_label": "@types/node"
+    },
+    {
+      "label": "tsx",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "package_devdependencies_tsx",
+      "community": 3,
+      "norm_label": "tsx"
+    },
+    {
+      "label": "typescript",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "package_devdependencies_typescript",
+      "community": 3,
+      "norm_label": "typescript"
+    },
+    {
+      "label": "vitest",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L42",
+      "_origin": "ast",
+      "id": "package_devdependencies_vitest",
+      "community": 3,
+      "norm_label": "vitest"
+    },
+    {
+      "label": "audit-content.ts",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_audit_content",
+      "community": 0,
+      "norm_label": "audit-content.ts"
+    },
+    {
+      "label": "__dirname",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "src_audit_content_dirname",
+      "community": 0,
+      "norm_label": "__dirname"
+    },
+    {
+      "label": "ObjectiveDomain",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "src_audit_content_objectivedomain",
+      "community": 0,
+      "norm_label": "objectivedomain"
+    },
+    {
+      "label": "Lesson",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "src_audit_content_lesson",
+      "community": 0,
+      "norm_label": "lesson"
+    },
+    {
+      "label": "Question",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "src_audit_content_question",
+      "community": 0,
+      "norm_label": "question"
+    },
+    {
+      "label": "Flashcard",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "src_audit_content_flashcard",
+      "community": 0,
+      "norm_label": "flashcard"
+    },
+    {
+      "label": "Course",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "src_audit_content_course",
+      "community": 0,
+      "norm_label": "course"
+    },
+    {
+      "label": "Bundle",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "src_audit_content_bundle",
+      "community": 0,
+      "norm_label": "bundle"
+    },
+    {
+      "label": "Rule",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "src_audit_content_rule",
+      "community": 0,
+      "norm_label": "rule"
+    },
+    {
+      "label": "Ruleset",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "src_audit_content_ruleset",
+      "community": 0,
+      "norm_label": "ruleset"
+    },
+    {
+      "label": "Severity",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "src_audit_content_severity",
+      "community": 0,
+      "norm_label": "severity"
+    },
+    {
+      "label": "Finding",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "src_audit_content_finding",
+      "community": 0,
+      "norm_label": "finding"
+    },
+    {
+      "label": "rulesPath",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "src_audit_content_rulespath",
+      "community": 0,
+      "norm_label": "rulespath"
+    },
+    {
+      "label": "ruleById",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L74",
+      "_origin": "ast",
+      "id": "src_audit_content_rulebyid",
+      "community": 0,
+      "norm_label": "rulebyid"
+    },
+    {
+      "label": "contentAuto",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "src_audit_content_contentauto",
+      "community": 0,
+      "norm_label": "contentauto"
+    },
+    {
+      "label": "loadCourses()",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "src_audit_content_loadcourses",
+      "community": 0,
+      "norm_label": "loadcourses()"
+    },
+    {
+      "label": "normObj()",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "src_audit_content_normobj",
+      "community": 0,
+      "norm_label": "normobj()"
+    },
+    {
+      "label": "RECALL_LEVELS",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "src_audit_content_recall_levels",
+      "community": 0,
+      "norm_label": "recall_levels"
+    },
+    {
+      "label": "VAGUE_VERBS",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L94",
+      "_origin": "ast",
+      "id": "src_audit_content_vague_verbs",
+      "community": 0,
+      "norm_label": "vague_verbs"
+    },
+    {
+      "label": "IDIOMS",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "src_audit_content_idioms",
+      "community": 0,
+      "norm_label": "idioms"
+    },
+    {
+      "label": "first()",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "src_audit_content_first",
+      "community": 0,
+      "norm_label": "first()"
+    },
+    {
+      "label": "auditCourse()",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "src_audit_content_auditcourse",
+      "community": 0,
+      "norm_label": "auditcourse()"
+    },
+    {
+      "label": "runCli()",
+      "file_type": "code",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "src_audit_content_runcli",
+      "community": 0,
+      "norm_label": "runcli()"
+    },
+    {
+      "label": "audit-platform.ts",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_audit_platform",
+      "community": 4,
+      "norm_label": "audit-platform.ts"
+    },
+    {
+      "label": "Severity",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "src_audit_platform_severity",
+      "community": 4,
+      "norm_label": "severity"
+    },
+    {
+      "label": "Finding",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "src_audit_platform_finding",
+      "community": 4,
+      "norm_label": "finding"
+    },
+    {
+      "label": "dirArg",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "src_audit_platform_dirarg",
+      "community": 4,
+      "norm_label": "dirarg"
+    },
+    {
+      "label": "walk()",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "src_audit_platform_walk",
+      "community": 4,
+      "norm_label": "walk()"
+    },
+    {
+      "label": "read()",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "src_audit_platform_read",
+      "community": 4,
+      "norm_label": "read()"
+    },
+    {
+      "label": "rel()",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "src_audit_platform_rel",
+      "community": 4,
+      "norm_label": "rel()"
+    },
+    {
+      "label": "findings",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "src_audit_platform_findings",
+      "community": 4,
+      "norm_label": "findings"
+    },
+    {
+      "label": "add()",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "src_audit_platform_add",
+      "community": 4,
+      "norm_label": "add()"
+    },
+    {
+      "label": "tokenFiles",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "src_audit_platform_tokenfiles",
+      "community": 4,
+      "norm_label": "tokenfiles"
+    },
+    {
+      "label": "cssFiles",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "src_audit_platform_cssfiles",
+      "community": 4,
+      "norm_label": "cssfiles"
+    },
+    {
+      "label": "allCss",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "src_audit_platform_allcss",
+      "community": 4,
+      "norm_label": "allcss"
+    },
+    {
+      "label": "paletteSelectors",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L109",
+      "_origin": "ast",
+      "id": "src_audit_platform_paletteselectors",
+      "community": 4,
+      "norm_label": "paletteselectors"
+    },
+    {
+      "label": "asJson",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L144",
+      "_origin": "ast",
+      "id": "src_audit_platform_asjson",
+      "community": 4,
+      "norm_label": "asjson"
+    },
+    {
+      "label": "notCheckable",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L145",
+      "_origin": "ast",
+      "id": "src_audit_platform_notcheckable",
+      "community": 4,
+      "norm_label": "notcheckable"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_index",
+      "community": 0,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "audit.test.ts",
+      "file_type": "code",
+      "source_file": "tests/audit.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "tests_audit_test",
+      "community": 0,
+      "norm_label": "audit.test.ts"
+    },
+    {
+      "label": "tsconfig.json",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "tsconfig",
+      "community": 5,
+      "norm_label": "tsconfig.json"
+    },
+    {
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions",
+      "community": 5,
+      "norm_label": "compileroptions"
+    },
+    {
+      "label": "target",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_target",
+      "community": 5,
+      "norm_label": "target"
+    },
+    {
+      "label": "module",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_module",
+      "community": 5,
+      "norm_label": "module"
+    },
+    {
+      "label": "moduleResolution",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_moduleresolution",
+      "community": 5,
+      "norm_label": "moduleresolution"
+    },
+    {
+      "label": "lib",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_lib",
+      "community": 5,
+      "norm_label": "lib"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_types",
+      "community": 5,
+      "norm_label": "types"
+    },
+    {
+      "label": "strict",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_strict",
+      "community": 5,
+      "norm_label": "strict"
+    },
+    {
+      "label": "esModuleInterop",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_esmoduleinterop",
+      "community": 5,
+      "norm_label": "esmoduleinterop"
+    },
+    {
+      "label": "skipLibCheck",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_skiplibcheck",
+      "community": 5,
+      "norm_label": "skiplibcheck"
+    },
+    {
+      "label": "resolveJsonModule",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_resolvejsonmodule",
+      "community": 5,
+      "norm_label": "resolvejsonmodule"
+    },
+    {
+      "label": "noEmit",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_noemit",
+      "community": 5,
+      "norm_label": "noemit"
+    },
+    {
+      "label": "forceConsistentCasingInFileNames",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "tsconfig_compileroptions_forceconsistentcasinginfilenames",
+      "community": 5,
+      "norm_label": "forceconsistentcasinginfilenames"
+    },
+    {
+      "label": "include",
+      "file_type": "code",
+      "source_file": "tsconfig.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "tsconfig_include",
+      "community": 5,
+      "norm_label": "include"
+    },
+    {
+      "label": "vitest.config.ts",
+      "file_type": "code",
+      "source_file": "vitest.config.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "vitest_config",
+      "community": 10,
+      "norm_label": "vitest.config.ts"
+    },
+    {
+      "label": "LearnKit README",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_learnkit",
+      "community": 2,
+      "norm_label": "learnkit readme"
+    },
+    {
+      "label": "LearnKit Research Provenance and Method",
+      "file_type": "document",
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_research_research_provenance",
+      "community": 2,
+      "norm_label": "learnkit research provenance and method"
+    },
+    {
+      "label": "Six-Angle Fan-Out Research",
+      "file_type": "rationale",
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_research_fan_out_research",
+      "community": 2,
+      "norm_label": "six-angle fan-out research"
+    },
+    {
+      "label": "Three-Vote Adversarial Verification",
+      "file_type": "rationale",
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_research_adversarial_verification",
+      "community": 2,
+      "norm_label": "three-vote adversarial verification"
+    },
+    {
+      "label": "76 Candidate Claims, 31 Survived, 45 Killed",
+      "file_type": "concept",
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_research_verification_outcome",
+      "community": 2,
+      "norm_label": "76 candidate claims, 31 survived, 45 killed"
+    },
+    {
+      "label": "LearnKit Instructional Design Source of Truth",
+      "file_type": "document",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_instructional_design_specification",
+      "community": 2,
+      "norm_label": "learnkit instructional design source of truth"
+    },
+    {
+      "label": "Evidence-Labeling Protocol",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_evidence_labeling",
+      "community": 2,
+      "norm_label": "evidence-labeling protocol"
+    },
+    {
+      "label": "Design for Human Variability",
+      "file_type": "rationale",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_design_for_human_variability",
+      "community": 2,
+      "norm_label": "design for human variability"
+    },
+    {
+      "label": "Deduplicated 36-Source Bibliography",
+      "file_type": "document",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_source_bibliography",
+      "community": 2,
+      "norm_label": "deduplicated 36-source bibliography"
+    },
+    {
+      "label": "Learning Science Sources: How People Learn II, Mayer, Cromley and Chen, Sweller, Barbieri, Schroeder, Bloom, UQ ITALI, Yale Poorvu, NC State DELTA, CMU Eberly, Dunlosky, S2D2",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_learning_science_sources",
+      "community": 2,
+      "norm_label": "learning science sources: how people learn ii, mayer, cromley and chen, sweller, barbieri, schroeder, bloom, uq itali, yale poorvu, nc state delta, cmu eberly, dunlosky, s2d2"
+    },
+    {
+      "label": "Practice and Feedback Sources: Distributed Practice 2025, Retrieval Practice 2025, Feedback Meta-Analysis 2019, Feedback-Timing Meta-Analysis 2026",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_practice_feedback_sources",
+      "community": 2,
+      "norm_label": "practice and feedback sources: distributed practice 2025, retrieval practice 2025, feedback meta-analysis 2019, feedback-timing meta-analysis 2026"
+    },
+    {
+      "label": "Neuroinclusion Sources: Wery and Diliberto, Dyslexie Spacing Study, WCAG 2.2, W3C COGA, AASPIRE, CAST UDL 3.0",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_neuroinclusion_sources",
+      "community": 2,
+      "norm_label": "neuroinclusion sources: wery and diliberto, dyslexie spacing study, wcag 2.2, w3c coga, aaspire, cast udl 3.0"
+    },
+    {
+      "label": "Motivation Sources: Self-Determination Theory, Overjustification, Goal-Setting Review, Goal-Setting Theory",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_motivation_sources",
+      "community": 2,
+      "norm_label": "motivation sources: self-determination theory, overjustification, goal-setting review, goal-setting theory"
+    },
+    {
+      "label": "Authoring Sources: ARIA APG, DTCG 2025.10, ARCHED, Reliable Generative-AI Scaffolding, AI Assessment Bloom Skew, cmi5",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_authoring_sources",
+      "community": 2,
+      "norm_label": "authoring sources: aria apg, dtcg 2025.10, arched, reliable generative-ai scaffolding, ai assessment bloom skew, cmi5"
+    },
+    {
+      "label": "Evidence-Contradicted Prohibited Claims",
+      "file_type": "concept",
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_source_of_truth_prohibited_claims",
+      "community": 2,
+      "norm_label": "evidence-contradicted prohibited claims"
+    },
+    {
+      "label": "Machine-Readable Evidence-Tiered Ruleset",
+      "file_type": "document",
+      "source_file": "docs/RULES.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_rules_ruleset",
+      "community": 2,
+      "norm_label": "machine-readable evidence-tiered ruleset"
+    },
+    {
+      "label": "LearnKit Content Schema",
+      "file_type": "document",
+      "source_file": "docs/CONTENT_SCHEMA.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "docs_content_schema_content_schema",
+      "community": 0,
+      "norm_label": "learnkit content schema"
+    },
+    {
+      "label": "Photosynthesis Basics Sample Course",
+      "file_type": "document",
+      "source_file": "examples/sample-course.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "examples_sample_course_photosynthesis_basics",
+      "community": 9,
+      "norm_label": "photosynthesis basics sample course"
+    },
+    {
+      "label": "Platform and Delivery-Layer Audit",
+      "file_type": "code",
+      "source_file": "src/audit-platform.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "src_audit_platform_platform_audit",
+      "community": 2,
+      "norm_label": "platform and delivery-layer audit"
+    },
+    {
+      "label": "Sample Course Clean-Audit Regression Guard",
+      "file_type": "code",
+      "source_file": "tests/audit.test.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tests_audit_sample_course_regression",
+      "community": 9,
+      "norm_label": "sample course clean-audit regression guard"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "bin_learnkit",
+      "target": "bin_learnkit_cmd_rest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "bin_learnkit",
+      "target": "bin_learnkit_here",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bin/learnkit.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "bin_learnkit",
+      "target": "bin_learnkit_runscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "docs_rules",
+      "target": "docs_rules_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "docs_rules",
+      "target": "docs_rules_prohibited",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "docs_rules",
+      "target": "docs_rules_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "docs_rules",
+      "target": "docs_rules_schema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_checktypelegend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_derivedfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_description",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_generated",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_scopelegend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_tierlegend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "docs_rules_meta",
+      "target": "docs_rules_meta_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "docs_rules_meta_tierlegend",
+      "target": "docs_rules_tierlegend_contested",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "docs_rules_meta_tierlegend",
+      "target": "docs_rules_tierlegend_inference",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "docs_rules_meta_tierlegend",
+      "target": "docs_rules_tierlegend_moderate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "docs_rules_meta_tierlegend",
+      "target": "docs_rules_tierlegend_strong",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "docs_rules_meta_scopelegend",
+      "target": "docs_rules_scopelegend_content",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "docs_rules_meta_scopelegend",
+      "target": "docs_rules_scopelegend_pipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "docs_rules_meta_scopelegend",
+      "target": "docs_rules_scopelegend_platform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "docs_rules_meta_checktypelegend",
+      "target": "docs_rules_checktypelegend_auto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "docs_rules_meta_checktypelegend",
+      "target": "docs_rules_checktypelegend_human",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RULES.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "docs_rules_meta_checktypelegend",
+      "target": "docs_rules_checktypelegend_llm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "examples_sample_course",
+      "target": "examples_sample_course_comment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "examples_sample_course",
+      "target": "examples_sample_course_courses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "examples_sample_course",
+      "target": "examples_sample_course_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "examples_sample_course_courses",
+      "target": "examples_sample_course_courses_photosynthesis_basics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L165",
+      "weight": 1.0,
+      "source": "examples_sample_course_courses_photosynthesis_basics",
+      "target": "examples_sample_course_photosynthesis_basics_flashcards",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "examples_sample_course_courses_photosynthesis_basics",
+      "target": "examples_sample_course_photosynthesis_basics_lessons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "examples_sample_course_courses_photosynthesis_basics",
+      "target": "examples_sample_course_photosynthesis_basics_objectivesbydomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "examples/sample-course.json",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "examples_sample_course_courses_photosynthesis_basics",
+      "target": "examples_sample_course_photosynthesis_basics_questions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_bin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_description",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_devdependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_keywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_license",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_scripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "package_bin",
+      "target": "package_bin_learnkit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_audit_platform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_audit_sample",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_test",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "package_scripts",
+      "target": "package_scripts_typecheck",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_typescript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "package_devdependencies",
+      "target": "package_devdependencies_vitest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_auditcourse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_bundle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_contentauto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_course",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_dirname",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_finding",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_first",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_flashcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_idioms",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_lesson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_loadcourses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_normobj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_objectivedomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_question",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_recall_levels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_rule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_rulebyid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_ruleset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_rulespath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_runcli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_severity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "src_audit_content",
+      "target": "src_audit_content_vague_verbs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/audit.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "tests_audit_test",
+      "target": "src_audit_content",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_course",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_ruleset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_severity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_finding",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_rulebyid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_contentauto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L238",
+      "weight": 1.0,
+      "source": "src_audit_content_runcli",
+      "target": "src_audit_content_loadcourses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_loadcourses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/audit.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "tests_audit_test",
+      "target": "src_audit_content_loadcourses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "src_audit_content_auditcourse",
+      "target": "src_audit_content_normobj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "src_audit_content_auditcourse",
+      "target": "src_audit_content_first",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/audit-content.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "src_audit_content_auditcourse",
+      "target": "docs_content_schema_content_schema"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/audit-content.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "src_audit_content_auditcourse",
+      "target": "docs_rules_ruleset"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-content.ts",
+      "source_location": "L245",
+      "weight": 1.0,
+      "source": "src_audit_content_runcli",
+      "target": "src_audit_content_auditcourse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_index",
+      "target": "src_audit_content_auditcourse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/audit.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "tests_audit_test",
+      "target": "src_audit_content_auditcourse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_add",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_allcss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_asjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_cssfiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_dirarg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_finding",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_findings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_notcheckable",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_paletteselectors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_read",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_rel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_severity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_tokenfiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/audit-platform.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_audit_platform",
+      "target": "src_audit_platform_walk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "tsconfig",
+      "target": "tsconfig_compileroptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "tsconfig",
+      "target": "tsconfig_include",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_esmoduleinterop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_forceconsistentcasinginfilenames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_lib",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_module",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_moduleresolution",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_noemit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_resolvejsonmodule",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_skiplibcheck",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_strict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tsconfig.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "tsconfig_compileroptions",
+      "target": "tsconfig_compileroptions_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_learnkit",
+      "target": "docs_research_research_provenance"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_learnkit",
+      "target": "docs_rules_ruleset"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_learnkit",
+      "target": "docs_source_of_truth_instructional_design_specification"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_research_research_provenance",
+      "target": "docs_research_adversarial_verification"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_research_research_provenance",
+      "target": "docs_research_fan_out_research"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_research_research_provenance",
+      "target": "docs_source_of_truth_source_bibliography"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RESEARCH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_research_adversarial_verification",
+      "target": "docs_research_verification_outcome"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RULES.json",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_rules_ruleset",
+      "target": "docs_source_of_truth_instructional_design_specification"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_instructional_design_specification",
+      "target": "docs_source_of_truth_design_for_human_variability"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_instructional_design_specification",
+      "target": "docs_source_of_truth_evidence_labeling"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_instructional_design_specification",
+      "target": "docs_source_of_truth_source_bibliography"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_prohibited_claims",
+      "target": "docs_source_of_truth_evidence_labeling"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_source_bibliography",
+      "target": "docs_source_of_truth_authoring_sources"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_source_bibliography",
+      "target": "docs_source_of_truth_learning_science_sources"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_source_bibliography",
+      "target": "docs_source_of_truth_motivation_sources"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_source_bibliography",
+      "target": "docs_source_of_truth_neuroinclusion_sources"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_source_of_truth_source_bibliography",
+      "target": "docs_source_of_truth_practice_feedback_sources"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/audit-platform.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "src_audit_platform_platform_audit",
+      "target": "docs_rules_ruleset"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/audit.test.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "tests_audit_sample_course_regression",
+      "target": "examples_sample_course_photosynthesis_basics"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "research_synthesis_pipeline",
+      "label": "Research Synthesis and Verification Pipeline",
+      "nodes": [
+        "docs_research_fan_out_research",
+        "docs_research_adversarial_verification",
+        "docs_research_verification_outcome",
+        "docs_source_of_truth_instructional_design_specification"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RESEARCH.md"
+    },
+    {
+      "id": "research_bibliography_domains",
+      "label": "Research Bibliography Domains",
+      "nodes": [
+        "docs_source_of_truth_learning_science_sources",
+        "docs_source_of_truth_practice_feedback_sources",
+        "docs_source_of_truth_neuroinclusion_sources",
+        "docs_source_of_truth_motivation_sources",
+        "docs_source_of_truth_authoring_sources"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md"
+    },
+    {
+      "id": "learnkit_enforcement_architecture",
+      "label": "LearnKit Enforcement Architecture",
+      "nodes": [
+        "docs_source_of_truth_instructional_design_specification",
+        "docs_rules_ruleset",
+        "docs_content_schema_content_schema",
+        "src_audit_content_auditcourse",
+        "src_audit_platform_platform_audit"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SOURCE_OF_TRUTH.md"
+    }
+  ],
+  "built_at_commit": "0e2aea6e235ca8bae60c99c49be1dace9ba9f6c4"
+}

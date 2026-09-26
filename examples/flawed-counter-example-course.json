@@ -1,0 +1,59 @@
+{
+  "_comment": "Deliberately flawed example to demonstrate LearnKit content-audit findings. This file should produce multiple errors on purpose.",
+  "version": 2,
+  "courses": {
+    "counter-example-lesson": {
+      "objectivesByDomain": [
+        {
+          "domainName": "Photosynthesis Basics",
+          "objectives": ["PB-1.1", "PB-1.2", "PB-1.99"]
+        }
+      ],
+      "lessons": [
+        {
+          "contentId": "flawed-lesson-only",
+          "title": "One giant lesson with no clear structure",
+          "slug": "one-giant-lesson",
+          "order": 1,
+          "domainName": "Photosynthesis Basics",
+          "estimatedMinutes": 45,
+          "objectiveTags": ["PB-1.1"],
+          "body": "# One giant lesson with no clear structure\n\nEveryone in this course should think like a visual learner, because everyone learns differently.\n\nPhotosynthesis converts water and carbon dioxide into oxygen and sugar with light energy. When I say this, just remember this exact phrase: BY THE TIME YOU READ THIS SECTION, YOU SHOULD BE ABLE TO MEMORIZE IT. This whole section is intentionally dense with long clauses and minimal headings because this is about cognitive overload by design. We are intentionally including long stretches of text without spacing, examples, visuals, or practical checkpoints so the auditor can flag readability and retrieval issues. It is okay to include the phrase in the ballpark here even though it's not literal for every learner. The important thing is to finish it fast and then skip details.\n"
+        }
+      ],
+      "questions": [
+        {
+          "contentId": "flawed-q1",
+          "objective": "PB-1.1",
+          "stem": "Which option is best for learners in this course?",
+          "choices": ["Use audio summaries", "Use visual learner content only", "Use one format for all", "Use a balanced approach"],
+          "correctIndex": 3
+        },
+        {
+          "contentId": "flawed-q2",
+          "objective": "PB-1.2",
+          "cognitiveLevel": "RECALL",
+          "stem": "At night, what chemical is released during photosynthesis?",
+          "choices": ["Glucose", "Oxygen", "Water", "Carbon dioxide"],
+          "correctIndex": 1,
+          "choiceRationales": [
+            "No rationale here for distractors.",
+            "Not enough explanation.",
+            "No rationale.",
+            "No rationale."
+          ],
+          "explanation": "Short explanation."
+        },
+        {
+          "contentId": "flawed-q3",
+          "objective": "PB-1.3",
+          "cognitiveLevel": "KNOW",
+          "stem": "Pick the correct input from above for photosynthesis.",
+          "choices": ["Water", "Sugar", "Paper", "Stone"],
+          "correctIndex": 0,
+          "explanation": "Correct: water is an input."
+        }
+      ]
+    }
+  }
+}

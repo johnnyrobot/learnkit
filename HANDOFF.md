@@ -53,7 +53,5 @@ npm run rules            # lists 57 rules + 7 prohibited patterns
 
 ## Open items
 
-- Repo is **private**. Make public later:
-  `gh repo edit johnnyrobot/learnkit --visibility public --accept-visibility-change-consequences`.
-- Nice-to-haves: a deliberately-flawed counter-example course (to demo the auditor catching problems),
-  `CONTRIBUTING.md`, and a GitHub Actions workflow running audit + tests on push.
+- Nice-to-have completed: deliberately-flawed counter-example course now added at
+  `examples/flawed-counter-example-course.json`.

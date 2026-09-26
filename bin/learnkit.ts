@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env node
 /**
  * LearnKit CLI.
  *
@@ -14,9 +14,34 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const [cmd, ...rest] = process.argv.slice(2);
+const runtimeRoot = path.resolve(here, "..");
+const sourceRoot = fs.existsSync(path.resolve(runtimeRoot, "src", "audit-content.js"))
+  ? runtimeRoot
+  : fs.existsSync(path.resolve(runtimeRoot, "package.json"))
+    ? runtimeRoot
+    : path.resolve(runtimeRoot, "..");
+const projectRoot = fs.existsSync(path.resolve(sourceRoot, "package.json"))
+  ? sourceRoot
+  : path.resolve(sourceRoot, "..");
 
 function runScript(file: string) {
-  const r = spawnSync("npx", ["tsx", path.resolve(here, "..", "src", file), ...rest], { stdio: "inherit" });
+  const tsFile = path.resolve(sourceRoot, "src", file);
+  const jsFile = tsFile.replace(/\.ts$/, ".js");
+  const localTsx = path.resolve(projectRoot, "node_modules", ".bin", process.platform === "win32" ? "tsx.cmd" : "tsx");
+
+  const useNode = fs.existsSync(jsFile);
+  const command = useNode
+    ? process.execPath
+    : fs.existsSync(localTsx)
+      ? localTsx
+      : "npx";
+  const args = useNode
+    ? [jsFile, ...rest]
+    : command === "npx"
+      ? ["tsx", tsFile, ...rest]
+      : [tsFile, ...rest];
+  const r = spawnSync(command, args, { stdio: "inherit" });
+
   process.exit(r.status ?? 1);
 }
 
@@ -28,7 +53,7 @@ switch (cmd) {
     runScript("audit-platform.ts");
     break;
   case "rules": {
-    const doc = JSON.parse(fs.readFileSync(path.resolve(here, "..", "docs", "RULES.json"), "utf8"));
+        const doc = JSON.parse(fs.readFileSync(path.resolve(projectRoot, "docs", "RULES.json"), "utf8"));
     if (rest.includes("--json")) { console.log(JSON.stringify(doc, null, 2)); break; }
     for (const r of doc.rules)
       console.log(`${r.id.padEnd(8)} [${r.scope}/${r.tier}] ${r.title}`);
