@@ -13,16 +13,13 @@ autism, cognitive accessibility) and grounded in evidence rather than folklore.
 
 - **Fork it. Adapt it. Use it commercially.** Code is MIT; docs/research are CC BY 4.0.
 - **No lock-in.** Plain JSON in, plain findings out. Works with any content pipeline that can emit the
-  small [content schema](docs/CONTENT_SCHEMA.md).
+  small content schema (`examples/sample-course.json` shows the shape).
 
 ## What's inside
 
 | Path | What it is |
 |---|---|
-| [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md) | The spec — evidence-labeling protocol, prohibited outputs, the backward-design pipeline, and ~57 encodable rules across objectives, cognitive load, multimedia, spacing/retrieval, feedback/assessment, motivation, accessibility, and authoring standards. |
 | [`docs/RULES.json`](docs/RULES.json) | Every rule as data: `id`, `scope`, evidence `tier`, `sourceUrl`, an automatable `check`, and a `before`/`after`/`why` example you can paste into a generation prompt as a few-shot exemplar. |
-| [`docs/RESEARCH.md`](docs/RESEARCH.md) | How the rules were produced — fan-out research + 3-vote adversarial verification (76 claims → 31 survived) — and how to extend them. |
-| [`docs/CONTENT_SCHEMA.md`](docs/CONTENT_SCHEMA.md) | The JSON your content pipeline should emit for the auditor. |
 | [`src/audit-content.ts`](src/audit-content.ts) | Content auditor — checks lessons, objectives, and questions. |
 | [`src/audit-platform.ts`](src/audit-platform.ts) | Delivery-layer auditor — checks CSS/design-token accessibility. |
 | [`examples/sample-course.json`](examples/sample-course.json) | A clean "Photosynthesis Basics" course that audits with zero findings — your template. |
@@ -108,7 +105,7 @@ LearnKit's core idea is **label everything and refuse the myths.** Each rule car
 (`strong` / `moderate` / `contested` / `inference`) and a source. And it hard-refuses patterns that
 sound plausible but contradict the evidence — e.g. matching content to "learning styles," prescribing
 dyslexia-specific fonts as a treatment, a single high-contrast-only theme, or "faster feedback always
-wins." See [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md) §1–§2.
+wins."
 
 > **Disclaimer.** *LearnKit is an instructional-design tool, not a clinical one. Its rules are graded
 > against published research, but the kit itself has not been clinically evaluated, and a clean audit is
@@ -128,4 +125,4 @@ relicensed.
 
 LearnKit was extracted from a production certification-course platform and generalized to be
 subject-neutral. It began as an audit of the *Leantime Neuroinclusive App Design Reference Guide* and
-was expanded via a multi-agent research pass. See [`docs/RESEARCH.md`](docs/RESEARCH.md).
+was expanded via a multi-agent research pass.

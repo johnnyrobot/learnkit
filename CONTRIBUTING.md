@@ -39,8 +39,7 @@ footer spent several releases claiming four rules nothing actually checked.
 
 Every field in the content schema is optional, so an unrecognized shape would otherwise read as "no
 content" and pass with zero findings — a green build gate on content that was never read. Unreadable
-shapes are refused at load; drifted field names and empty courses report as `SCHEMA` findings. See
-[`docs/CONTENT_SCHEMA.md`](docs/CONTENT_SCHEMA.md) § Shape validation.
+shapes are refused at load; drifted field names and empty courses report as `SCHEMA` findings.
 
 ## The two fixtures
 
@@ -78,8 +77,8 @@ LearnKit deliberately refuses claims that sound plausible but contradict the evi
 - a single high-contrast-only theme as the accessibility answer
 - "faster feedback always wins"
 
-See [`docs/SOURCE_OF_TRUTH.md`](docs/SOURCE_OF_TRUTH.md) §1–§2. A PR reintroducing one of these needs
-to overturn the sources there, not just assert the opposite.
+A PR reintroducing one of these needs to overturn the sources cited in `docs/RULES.json`, not just
+assert the opposite.
 
 ## Scope
 

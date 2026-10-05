@@ -35,8 +35,7 @@ auditor read or write a file you did not point it at.
 
 Also in scope, and worth reporting even though it is not memory-unsafe: **an input that produces a
 falsely clean audit.** LearnKit is used as a build gate, so a document that reports zero findings
-without actually being audited defeats its purpose. That class of bug is treated as a real defect —
-see `docs/CONTENT_SCHEMA.md` § Shape validation.
+without actually being audited defeats its purpose. That class of bug is treated as a real defect.
 
 Out of scope: advisories in dev-only dependencies that do not affect anyone running the auditors, and
 the accuracy or pedagogical merit of a rule — that is an issue or a PR, not a security report.
